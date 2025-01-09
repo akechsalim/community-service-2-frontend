@@ -1,0 +1,77 @@
+:root {
+    --primary-color: #28a745; /* Subtle green */
+    --primary-green-hover: #88c89b; /* Slightly darker green for hover */
+    --primary-green-text: #264d3b; /* Darker green for text */
+    --secondary-color: #6c757d; /* Gray */
+    --hover-color: #218838; /* Dark green for intense hover */
+    --background-color: #f4f4f4; /* Light gray */
+    --text-color: #ffffff; /* White for text */
+
+    --delete-bg: #f8d7da; /* Light red for delete button */
+    --delete-text: #721c24; /* Darker red for text */
+    --delete-hover-bg: #f5c6cb; /* Slightly darker red on hover */
+    --delete-hover-text: #491217;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    font-family: 'Arial', sans-serif;
+    color: var(--primary-green-text);
+}
+
+/* General Text Positioning */
+h1, h2, h3, p {
+    text-align: center;
+    color: var(--primary-color);
+}
+
+/* Buttons */
+button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--primary-green-hover);
+}
+
+button.delete {
+    background-color: var(--delete-bg);
+    color: var(--delete-text);
+}
+
+button.delete:hover {
+    background-color: var(--delete-hover-bg);
+    color: var(--delete-hover-text);
+}
+
+
+/* Form Input Styles */
+input[type="text"],
+input[type="password"],
+input[type="datetime-local"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    .container {
+        width: 95%;
+    }
+}
