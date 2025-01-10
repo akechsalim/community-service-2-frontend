@@ -1,20 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
 .event-list-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 800px;
+    margin: 20px auto;
     padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-list-container h1 {
+    text-align: center;
+    color: #2c7a7b;
+    margin-bottom: 20px;
 }
 
 .event-cards {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
 .success-message {
-    background-color: var(--primary-color);
-    color: white;
+    color: #2f855a;
+    background: #f0fff4;
     padding: 10px;
-    margin-bottom: 20px;
+    border: 1px solid #38a169;
     border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
     text-align: center;
+}
+
+/* The modal background */
+.edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears on top of other elements */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show the modal when editingEvent is set */
+.edit-modal.open {
+    opacity: 1;
+    visibility: visible;
 }
