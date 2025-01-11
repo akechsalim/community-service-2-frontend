@@ -13,12 +13,10 @@
     --delete-hover-text: #491217;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--background-color);
-    font-family: 'Arial', sans-serif;
-    color: var(--primary-green-text);
+/* General Text Positioning */
+h1, h2, h3, p {
+    text-align: center;
+    color: var(--primary-color);
 }
 
 /* General Text Positioning */

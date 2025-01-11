@@ -1,7 +1,22 @@
+/* Styles for .register-form to look like a card */
+html, body {
+    height: 100%; /* or 100vh for full viewport height */
+    margin: 0;
+    padding: 0;
+}
+#register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding-top: -50px;
+}
 .register-form {
-    max-width: 300px;
-    margin: 0 auto;
-    padding: 20px;
+    position: relative;
+    top: -150px;
+    max-width: 500px;
+    padding: 60px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -25,4 +40,25 @@
 .register-form button {
     width: 100%;
     padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
+
+.register-form button:hover {
+    background-color: var(--primary-green-hover);
+}
+#register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    width: 100%;
+    padding-top: -50px;
+}
+
+

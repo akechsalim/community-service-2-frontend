@@ -5,43 +5,37 @@ import AuthService from "../Auth/Services/authService";
 
 const Events = () => {
     const [events, setEvents] = useState([]);
-    const [userRole, setUserRole] = useState(null);
+    const {role} = AuthService.getUserData(); // Retrieve role here
 
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchData = async () => {
             try {
-                const token = AuthService.getToken();  // Use AuthService to get the token
-                if (token) {
-                    const userResponse = await axios.get('http://localhost:8080/api/auth/user', {
-                        headers: { Authorization: `Bearer ${token}` }  // Send token in header
-                    });
-                    setUserRole(userResponse.data.role);
+                const headers = AuthService.getAuthHeaders();
+                if (!headers.Authorization) {
+                    throw new Error("No token found");
                 }
+
+                const eventsResponse = await axios.get('http://localhost:8080/api/events', {headers});
+                setEvents(eventsResponse.data);
+
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                console.error('Error fetching data:', error);
+                if (error.response && error.response.status === 401) {
+                    AuthService.clearUserData();
+                    window.location.href = '/login';
+                }
             }
         };
 
-        const fetchEvents = async () => {
-            try {
-                const token = AuthService.getToken();  // Use AuthService to get the token
-                const response = await axios.get('http://localhost:8080/api/events', {
-                    headers: { Authorization: `Bearer ${token}` }  // Send token in header
-                });
-                setEvents(response.data);
-            } catch (error) {
-                console.error('Error fetching events:', error);
-            }
-        };
-
-        fetchUserData();
-        fetchEvents();
+        fetchData();
     }, []);
+
+    const handleEventsUpdate = (updatedEvents) => setEvents(updatedEvents);
 
     return (
         <div style={{background: '#f4f4f9', color: '#333'}}>
             <h2 style={{color: '#2c7a7b', textAlign: 'center'}}>Community Events</h2>
-            {userRole === 'ADMIN' &&
+            {role === 'ADMIN' &&
                 <button
                     style={{
                         backgroundColor: '#28a745',
@@ -55,7 +49,7 @@ const Events = () => {
                     Create Event
                 </button>
             }
-            <EventList events={events} userRole={userRole}/>
+            <EventList events={events} userRole={role} onEventsUpdate={handleEventsUpdate} />
         </div>
     );
 };

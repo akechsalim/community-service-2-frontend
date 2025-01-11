@@ -1,23 +1,31 @@
 class AuthService {
-    // Store the token after login
-    static setToken(token) {
-        sessionStorage.setItem('jwtToken', token);  // Use sessionStorage instead of localStorage
+    static setUserData(token, username, role) {
+        sessionStorage.setItem('jwtToken', token);
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('role', role);
     }
 
-    // Get the token when needed
+    static getUserData() {
+        return {
+            token: this.getToken(),
+            username: sessionStorage.getItem('username'),
+            role: sessionStorage.getItem('role')
+        };
+    }
+
     static getToken() {
-        return sessionStorage.getItem('jwtToken');  // Retrieve from sessionStorage
+        return sessionStorage.getItem('jwtToken');
     }
 
-    // Add token to the Authorization header of each request
     static getAuthHeaders() {
         const token = this.getToken();
-        return token ? { 'Authorization': `Bearer ${token}` } : {};
+        return token ? {'Authorization': `Bearer ${token}`} : {};
     }
 
-    // Clear the token on logout
-    static clearToken() {
-        sessionStorage.removeItem('jwtToken');  // Clear from sessionStorage
+    static clearUserData() {
+        sessionStorage.removeItem('jwtToken');
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('role');
     }
 }
 

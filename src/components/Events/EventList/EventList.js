@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import EventCard from '../EventCard/EventCard';
 import EventModal from '../EventModal/EventModal';
 import './EventList.css';
+import AuthService from "../../Auth/Services/authService";
 
-const EventList = ({events, userRole}) => {
+const EventList = ({ events, userRole, onEventsUpdate }) => {
     // State for managing the event being edited or viewed in detail
     const [editingEvent, setEditingEvent] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
@@ -17,15 +18,6 @@ const EventList = ({events, userRole}) => {
         endTime: "",
     });
 
-    // Placeholder for event fetching, not needed as events are passed via props
-    const fetchEvents = () => {
-        // This fetch is not needed since events are passed as props
-    };
-
-    useEffect(() => {
-        // No need to fetch events since they are passed as props
-    }, []);
-
     const handleEditClick = (event) => {
         setEditingEvent(event);
         setUpdatedEvent({
@@ -37,16 +29,21 @@ const EventList = ({events, userRole}) => {
 
     const handleUpdateEvent = (updatedEvent) => {
         axios
-            .put(`http://localhost:8080/api/events/${editingEvent.id}`, updatedEvent, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-            })
+            .put(`http://localhost:8080/api/events/${editingEvent.id}`, updatedEvent,
+                {headers: AuthService.getAuthHeaders()}
+            )
             .then((response) => {
                 setSuccessMessage("Event updated successfully!");
                 setTimeout(() => setSuccessMessage(""), 3000);
                 setEditingEvent(null);
-                // Update the event in the list without refetching.
-                // Note: This doesn't change the parent component's state directly
-                const updatedEvents = events.map(e => e.id === response.data.id ? response.data : e);
+                // Call the parent component's update function
+
+                // Update parent events
+                const updatedEvents = events.map((e) =>
+                    e.id === response.data.id ? response.data : e
+                );
+                onEventsUpdate(updatedEvents);
+
                 // If you want to update the parent's state, you'd probably use a callback prop
             })
             .catch((error) => console.error("Error updating event:", error));
@@ -62,16 +59,19 @@ const EventList = ({events, userRole}) => {
 
     const handleDelete = (eventId) => {
         axios
-            .delete(`http://localhost:8080/api/events/${eventId}`, {
-                headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-            })
+            .delete(`http://localhost:8080/api/events/${eventId}`,
+                {headers: AuthService.getAuthHeaders()}
+            )
             .then(() => {
-                // Remove event from list without refetching.
-                // Again, this doesn't update the parent component's state directly
-                const newEvents = events.filter(e => e.id !== eventId);
+                const updatedEvents = events.filter((e) => e.id !== eventId);
+
+                // Call the parent component's update function after deletion
+
+
                 setSuccessMessage("Event deleted successfully!");
                 setTimeout(() => setSuccessMessage(""), 3000);
                 // You might want to use a callback to update events in the parent component
+                onEventsUpdate(updatedEvents); // Notify parent of update
             })
             .catch((error) => console.error("Error deleting event:", error));
     };
@@ -79,7 +79,7 @@ const EventList = ({events, userRole}) => {
     // Handling changes in the edit form
     const handleEditChange = (e) => {
         const {name, value} = e.target;
-        setUpdatedEvent(prevEvent => ({...prevEvent, [name]: value}));
+        setUpdatedEvent((prev) => ({ ...prev, [name]: value }));
     };
 
     return (

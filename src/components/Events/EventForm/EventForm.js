@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
+import AuthService from "../../Auth/Services/authService";
 
 const EventForm = () => {
     const [event, setEvent] = useState({
@@ -13,9 +14,8 @@ const EventForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/events', event, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            });
+            const response = await axios.post('http://localhost:8080/api/events', event,
+                {headers: AuthService.getAuthHeaders()});
             console.log('Event created:', response.data); // For debugging
             window.location.href = '/events';
         } catch (error) {
@@ -25,8 +25,8 @@ const EventForm = () => {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setEvent(prevEvent => ({ ...prevEvent, [name]: value }));
+        const {name, value} = e.target;
+        setEvent(prevEvent => ({...prevEvent, [name]: value}));
     };
 
     return (

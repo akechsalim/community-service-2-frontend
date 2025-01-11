@@ -1,7 +1,24 @@
+/* Existing styles */
+html, body {
+    height: 100%;
+    margin: 0; /* Reset margins */
+    padding: 0; /* Reset padding */
+}
+
+#login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* This should work if #login-container is a direct child of body */
+    width: 100%;
+    margin: 0;
+    padding-top: -50px/* Reset margins */
+}
 .login-form {
-    max-width: 300px;
-    margin: 0 auto;
-    padding: 20px;
+    position: relative;
+    top: -150px;
+    max-width: 500px;
+    padding: 60px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -39,4 +56,13 @@
 .error-message {
     color: var(--delete-text);
     text-align: center;
+}
+
+/* New styles to center the form */
+#login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
