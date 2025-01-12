@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import './Navbar.css';
 
-const Navbar = ({ userRole,onLogout }) => {
+const Navbar = ({userRole, onLogout}) => {
     const navigate = useNavigate();
 
     const handleLogoutClick = (e) => {
@@ -15,11 +15,12 @@ const Navbar = ({ userRole,onLogout }) => {
             <ul className="nav-list">
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/events">Events</Link></li>
-                {userRole === 'ADMIN' && (
-                    <>
-                        <li><Link to="/admin">Admin Dashboard</Link></li>
-                    </>
-                )}
+                {userRole === 'ADMIN' && (<>
+                    <li><Link to="/admin">Admin Dashboard</Link></li>
+                </>)}
+                {userRole === 'VOLUNTEER' && (<>
+                    <li><Link to="/volunteer">Volunteer Dashboard</Link></li>
+                </>)}
                 <li><Link to="/login" onClick={handleLogoutClick}>Logout</Link></li>
             </ul>
         </nav>

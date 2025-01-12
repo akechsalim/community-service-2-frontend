@@ -33,7 +33,7 @@ const Events = () => {
     const handleEventsUpdate = (updatedEvents) => setEvents(updatedEvents);
 
     return (
-        <div style={{background: '#f4f4f9', color: '#333'}}>
+        <div style={{background: '#f4f4f9', color: '#333',textAlign: 'center'}}>
             <h2 style={{color: '#2c7a7b', textAlign: 'center'}}>Community Events</h2>
             {role === 'ADMIN' &&
                 <button
@@ -42,14 +42,16 @@ const Events = () => {
                         color: 'white',
                         padding: '10px',
                         borderRadius: '4px',
-                        border: 'none'
+                        border: 'none',
+                        cursor: 'pointer',
+                        marginTop: '10px',
                     }}
                     onClick={() => window.location.href = '/event-form'}
                 >
                     Create Event
                 </button>
             }
-            <EventList events={events} userRole={role} onEventsUpdate={handleEventsUpdate} />
+            <EventList events={events} userRole={role} onEventsUpdate={handleEventsUpdate}/>
         </div>
     );
 };

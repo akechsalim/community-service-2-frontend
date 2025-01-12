@@ -40,6 +40,8 @@ const Login = ({handleLogin}) => {
                     required
                 />
                 <button type="submit">Login</button>
+                <h4>-----or----</h4>
+                <button type={"submit"} onClick={()=>navigate('/register')}>Register</button>
                 {error && <p className="error-message">{error}</p>}
             </form>
         </div>

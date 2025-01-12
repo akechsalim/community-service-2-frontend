@@ -10,9 +10,8 @@ import AuthService from "./components/Auth/Services/authService";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const {role} = AuthService.getUserData(); // Retrieve role using AuthService
+    const {role} = AuthService.getUserData();
 
-    // This would be better if token and role were managed through a state management library like Redux or Context API
     React.useEffect(() => {
         const checkAuthentication = async () => {
             try {
@@ -20,8 +19,6 @@ function App() {
                 if (!headers.Authorization) {
                     throw new Error("No token found");
                 }
-
-                /// Check if token is valid, possibly by making an API call to verify
                 setIsAuthenticated(true); // If token is present, consider user authenticated
             } catch (error) {
                 console.error('Authentication check failed:', error);
@@ -51,7 +48,7 @@ function App() {
 
     return (
         <Router>
-            {isAuthenticated && <Navbar userRole={role} onLogout={handleLogout} />}
+            {isAuthenticated && <Navbar userRole={role} onLogout={handleLogout}/>}
             <Routes>
                 <Route path="/login" element={<Login handleLogin={handleLogin}/>}/>
                 <Route path="/register" element={<Register handleLogin={handleLogin}/>}/>
@@ -62,9 +59,9 @@ function App() {
                             <p>Please use the navigation bar to access events.</p>
                         </div>
                     </PrivateRoute>
-                } />
-                <Route path="/events" element={<PrivateRoute><Events /></PrivateRoute>} />
-                <Route path="/event-form" element={<PrivateRoute><EventForm /></PrivateRoute>} />
+                }/>
+                <Route path="/events" element={<Events/>}/>
+                <Route path="/event-form" element={<EventForm/>}/>
             </Routes>
         </Router>
     );

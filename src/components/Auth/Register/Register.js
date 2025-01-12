@@ -19,8 +19,8 @@ const Register = ({handleLogin}) => {
     };
 
     return (
-        <div id="register-container">
-            <form onSubmit={handleSubmit} className="register-form">
+        <div className="register-form-container">
+            <form className="register-form" onSubmit={handleSubmit} >
                 <h2>Register</h2>
                 <input
                     type="text"
