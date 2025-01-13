@@ -7,10 +7,12 @@ import Register from './components/Auth/Register/Register';
 import EventForm from './components/Events/EventForm/EventForm';
 import './styles.css';
 import AuthService from "./components/Auth/Services/authService";
+import VolunteerDashboard from "./components/Dashboard/VolunteerDashboard";
+import AdminDashboard from "./components/Dashboard/AdminDashboard";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const {role} = AuthService.getUserData();
+    const {role, userId} = AuthService.getUserData();
 
     React.useEffect(() => {
         const checkAuthentication = async () => {
@@ -32,8 +34,8 @@ function App() {
         checkAuthentication();
     }, []);
     // Helper function to handle login
-    const handleLogin = (token, username, role) => {
-        AuthService.setUserData(token, username, role);
+    const handleLogin = (token, username, role,userId) => {
+        AuthService.setUserData(token, username, role,userId);
         setIsAuthenticated(true);
     };
     // Logout function
@@ -42,8 +44,9 @@ function App() {
         setIsAuthenticated(false);
     };
 
-    const PrivateRoute = ({children}) => {
-        return isAuthenticated ? children : <Navigate to="/login"/>;
+    const PrivateRoute = ({ children }) => {
+        if (!isAuthenticated) return <Navigate to="/login" />;
+        return children;
     };
 
     return (
@@ -62,6 +65,16 @@ function App() {
                 }/>
                 <Route path="/events" element={<Events/>}/>
                 <Route path="/event-form" element={<EventForm/>}/>
+                <Route path="/admin" element={
+                    <PrivateRoute>
+                        <AdminDashboard />
+                    </PrivateRoute>
+                } />
+                <Route path="/volunteer" element={
+                    <PrivateRoute>
+                        <VolunteerDashboard />
+                    </PrivateRoute>
+                } />
             </Routes>
         </Router>
     );

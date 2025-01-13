@@ -1,8 +1,9 @@
 class AuthService {
-    static setUserData(token, username, role) {
+    static setUserData(token, username, role,userId) {
         sessionStorage.setItem('jwtToken', token);
         sessionStorage.setItem('username', username);
         sessionStorage.setItem('role', role);
+        sessionStorage.setItem('userId', userId);
     }
 
     static getUserData() {
@@ -26,6 +27,12 @@ class AuthService {
         sessionStorage.removeItem('jwtToken');
         sessionStorage.removeItem('username');
         sessionStorage.removeItem('role');
+        sessionStorage.removeItem('userId');
+
+    }
+
+    static getUserId() {
+        return localStorage.getItem('userId');
     }
 }
 
