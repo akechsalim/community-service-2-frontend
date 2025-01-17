@@ -41,10 +41,11 @@ const VolunteerCard = ({ volunteer }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const headers = AuthService.getAuthHeaders();
             await axios.post('http://localhost:8080/api/admin/tasks', {
                 ...task,
                 volunteerId: volunteer.id
-            });
+            },{headers});
             handleClose();
             // Optionally, fetch updated volunteer list
         } catch (error) {
