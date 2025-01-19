@@ -10,7 +10,8 @@ class AuthService {
         return {
             token: this.getToken(),
             username: sessionStorage.getItem('username'),
-            role: sessionStorage.getItem('role')
+            role: sessionStorage.getItem('role'),
+            userId : sessionStorage.getItem('userId')
         };
     }
 
@@ -32,7 +33,7 @@ class AuthService {
     }
 
     static getUserId() {
-        return localStorage.getItem('userId');
+        return sessionStorage.getItem('userId');
     }
 }
 

@@ -1,29 +1,52 @@
-.volunteer-dashboard {
+body {
     font-family: Arial, sans-serif;
-    background: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
     color: #333;
+}
+
+.volunteer-dashboard {
+    max-width: 800px;
+    margin: 20px auto;
     padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .volunteer-dashboard h2 {
-    color: #2c7a7b;
     text-align: center;
+    color: #2c7a7b;
+    margin-bottom: 20px;
 }
 
 .task-card {
-    background: #fff;
-    border: 1px solid #ddd;
+    background: #e6fffa;
+    border: 1px solid #b2f5ea;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 .task-card h3 {
-    color: #1da1f2;
+    color: #2c7a7b;
     margin-bottom: 10px;
 }
 
 .task-card p {
     margin: 5px 0;
+    color: #25803a;
+}
+.task-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
 }

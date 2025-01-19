@@ -13,8 +13,9 @@ const Login = ({handleLogin}) => {
         event.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/api/auth/login', credentials);
-            AuthService.setUserData(response.data.token, response.data.username, response.data.role);
-            handleLogin(response.data.token, response.data.username, response.data.role);
+            console.log('Full login response:', response.data); // Log the whole response
+            AuthService.setUserData(response.data.token, response.data.username, response.data.role,response.data.userId);
+            handleLogin(response.data.token, response.data.username, response.data.role,response.data.userId);
             navigate('/');
         } catch (error) {
             setError('Invalid username or password');

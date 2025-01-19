@@ -9,33 +9,42 @@ const VolunteerDashboard = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const userId = AuthService.getUserId(); // Ensure this method exists and returns a valid ID
+                const userId = AuthService.getUserId();
+                console.log('Fetched userId:', userId);
                 if (!userId) {
                     console.error("User ID not available");
-                    return; // or handle this case appropriately, maybe redirect to login
+                    return;
                 }
                 const headers = AuthService.getAuthHeaders();
+                console.log('Headers:', headers);
                 const response = await axios.get(`http://localhost:8080/api/tasks/volunteer/${userId}`, { headers });
                 setTasks(response.data);
             } catch (error) {
                 console.error('Failed to fetch tasks:', error);
             }
         };
-        fetchTasks();
+        const userId = AuthService.getUserId();
+        if (userId) {
+            fetchTasks();
+        } else {
+            console.error("User ID is missing. Please log in again.");
+        }
     }, []);
 
     return (
         <div className="volunteer-dashboard">
             <h2>My Tasks</h2>
-            {tasks.map(task => (
-                <div key={task.id} className="task-card">
-                    <h3>{task.title}</h3>
-                    <p>{task.description}</p>
-                    <p>Status: {task.status}</p>
-                </div>
-            ))}
+            <div className="task-list">
+                {tasks.map(task => (
+                    <div key={task.id} className="task-card">
+                        <h3>{task.title}</h3>
+                        <p>{task.description}</p>
+                        <p>Status: {task.status}</p>
+                    </div>
+                ))}
+            </div>
         </div>
-    );
-};
+            );
+            };
 
-export default VolunteerDashboard;
+            export default VolunteerDashboard;
