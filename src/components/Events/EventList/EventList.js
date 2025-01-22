@@ -5,7 +5,7 @@ import EventModal from '../EventModal/EventModal';
 import './EventList.css';
 import AuthService from "../../Auth/Services/authService";
 
-const EventList = ({ events, userRole, onEventsUpdate }) => {
+const EventList = ({events, userRole, onEventsUpdate}) => {
     // State for managing the event being edited or viewed in detail
     const [editingEvent, setEditingEvent] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
@@ -17,6 +17,40 @@ const EventList = ({ events, userRole, onEventsUpdate }) => {
         startTime: "",
         endTime: "",
     });
+    // New state for modal control of sponsor button
+    const [sponsorModalOpen, setSponsorModalOpen] = useState(false);
+    const [sponsorAmount, setSponsorAmount] = useState('');
+
+
+
+    const openSponsorModal = (event) => {
+        setSelectedEvent(null);
+        setSponsorModalOpen(true);
+        setSelectedEvent(event);
+    };
+
+    const closeSponsorModal = () => {
+        setSponsorModalOpen(false);
+    };
+
+    const handleSponsorship = async () => {
+        console.log('handleSponsorship called');
+        if (selectedEvent && sponsorAmount) {
+            console.log('Sending sponsorship request for amount:', sponsorAmount);
+            try {
+                await axios.post(`http://localhost:8080/api/events/${selectedEvent.id}/sponsor`,
+                    { amount: parseFloat(sponsorAmount) },
+                    { headers: AuthService.getAuthHeaders() }
+                );
+                setSponsorModalOpen(false);
+                setSponsorAmount('');
+                // Optionally update the UI or notify the user of success
+
+            } catch (error) {
+                console.error('Error sponsoring event:', error);
+            }
+        }
+    };
 
     const handleEditClick = (event) => {
         setEditingEvent(event);
@@ -50,7 +84,9 @@ const EventList = ({ events, userRole, onEventsUpdate }) => {
     };
 
     const handleShowDetails = (event) => {
-        setSelectedEvent(event);
+        if (!sponsorModalOpen) {
+            setSelectedEvent(event);
+        }
     };
 
     const handleCloseDetails = () => {
@@ -79,7 +115,7 @@ const EventList = ({ events, userRole, onEventsUpdate }) => {
     // Handling changes in the edit form
     const handleEditChange = (e) => {
         const {name, value} = e.target;
-        setUpdatedEvent((prev) => ({ ...prev, [name]: value }));
+        setUpdatedEvent((prev) => ({...prev, [name]: value}));
     };
 
     return (
@@ -95,11 +131,16 @@ const EventList = ({ events, userRole, onEventsUpdate }) => {
                             onEdit={userRole === 'ADMIN' ? handleEditClick : undefined}
                             onDelete={userRole === 'ADMIN' ? handleDelete : undefined}
                             onDetails={handleShowDetails}
-                        />
+                        >
+                            {userRole === 'SPONSOR' && (
+                                <button onClick={() => openSponsorModal(event)}>Sponsor</button>
+                            )}
+                        </EventCard>
                     )) :
                     <p>No events available.</p>
                 }
             </div>
+
             {editingEvent &&
                 <div className={`edit-modal ${editingEvent ? 'open' : ''}`}>
                     <div className="modal-content">
@@ -151,9 +192,24 @@ const EventList = ({ events, userRole, onEventsUpdate }) => {
                     </div>
                 </div>
             }
-            {selectedEvent &&
+            {selectedEvent && !sponsorModalOpen && (
                 <EventModal event={selectedEvent} onClose={handleCloseDetails} mode="view"/>
-            }
+            )}
+            {sponsorModalOpen && (
+                <div className="sponsor-modal">
+                    <div className="modal-content">
+                        <h2>Sponsor Event</h2>
+                        <input
+                            type="number"
+                            value={sponsorAmount}
+                            onChange={(e) => setSponsorAmount(e.target.value)}
+                            placeholder="Sponsorship Amount"
+                        />
+                        <button onClick={handleSponsorship}>Confirm Sponsorship</button>
+                        <button onClick={closeSponsorModal}>Cancel</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

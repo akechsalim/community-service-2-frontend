@@ -8,11 +8,17 @@ body {
 
 .admin-dashboard {
     max-width: 800px;
-    margin: 20px auto;
+    margin: 20px auto 20px 20px;
     padding: 20px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    float: left;
+}
+.admin-dashboard {
+    width: 70%; /* Width of the main dashboard */
+    margin-right: 20px; /* Space between dashboard and details */
+    float: left;
 }
 
 .admin-dashboard h2 {
@@ -20,29 +26,44 @@ body {
     color: #2c7a7b;
     margin-bottom: 20px;
 }
+.main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 
-.volunteer-list {
+#volunteers, #sponsors {
+    flex: 1;
+}
+
+.volunteer-list, .sponsor-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
 }
 
-.volunteer-card {
+.volunteer-card, .sponsor-card {
     background: #e6fffa;
     border: 1px solid #b2f5ea;
     border-radius: 8px;
     padding: 15px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
+.sponsor-card {
+    background: #e6faff;
+}
 
-.volunteer-card:hover {
+.volunteer-card:hover, .sponsor-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.volunteer-card h3 {
+.volunteer-card h3, .sponsor-card h3 {
     color: #2c7a7b;
     margin-bottom: 10px;
+}
+.volunteer-card.selected {
+    background-color: #78c9dd; /* Highlight selected volunteer */
 }
 
 .volunteer-card button {
@@ -54,78 +75,40 @@ body {
     cursor: pointer;
     width: 100%;
 }
-
-.task-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-}
-
-.task-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.task-form input, .task-form textarea {
+.search-input {
+    width: 100%;
     padding: 10px;
+    margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
+/* Volunteer Details Card */
 
-.task-form button {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.task-form button[type="button"] {
-    background: #F08080;
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
+.volunteer-details-container {
+    width: 38%;
+    margin: 20px auto 20px 20px;
     border-radius: 8px;
-    max-width: 80%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    float: right;
 }
 
-.available-volunteers-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.volunteer-details-card {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.assign-task-section {
     margin-top: 20px;
 }
 
-.assign-task-button {
-    background-color: #1da1f2;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
+.assign-task-section input, .assign-task-section textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .task-item {
@@ -143,3 +126,63 @@ body {
     cursor: pointer;
     margin-top: 5px;
 }
+
+.admin-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.admin-nav a:hover {
+    background-color: #111;
+}
+.sponsor-details-container {
+    width: 500px; /* Adjust based on your layout */
+    padding: 20px;
+    margin-left: 20px; /* Space from the main content */
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: absolute; /* Position it absolutely */
+    right: 20px; /* Stick it to the right side */
+    top: 90px; /* Add space from the top */
+    bottom: 20px; /* Allow it to stretch to the bottom */
+    overflow-y: auto;
+}
+
+.sponsor-details-container h3 {
+    color: #2c7a7b;
+    margin-bottom: 15px;
+}
+
+.sponsor-details-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sponsor-details-container li {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
+.sponsor-details-container li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.sponsor-details-container p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+
+
+
+
+
+
+

@@ -10,17 +10,34 @@ const Navbar = ({userRole, onLogout}) => {
         onLogout(); // This will set isAuthenticated to false
         navigate("/login"); // Manually navigate to the login page
     };
+    const scrollToSection = (id) => {
+        navigate('/admin', { replace: true }); // Navigate to admin page if not there
+        setTimeout(() => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 100); // A small delay to ensure navigation has completed
+    };
     return (
         <nav className="navbar">
             <ul className="nav-list">
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/events">Events</Link></li>
-                {userRole === 'ADMIN' && (<>
-                    <li><Link to="/admin">Admin Dashboard</Link></li>
-                </>)}
-                {userRole === 'VOLUNTEER' && (<>
+                {userRole === 'ADMIN' && (
+                    <li className="dropdown">
+                        <a href="#" className="dropbtn">Admin Dashboard</a>
+                        <div className="dropdown-content">
+                            <button onClick={() => scrollToSection('volunteers')} className="dropdown-link">Volunteers
+                            </button>
+                            <button onClick={() => scrollToSection('sponsors')} className="dropdown-link">Sponsors
+                            </button>
+                        </div>
+                    </li>
+                )}
+                {userRole === 'VOLUNTEER' && (
                     <li><Link to="/volunteer">Volunteer Dashboard</Link></li>
-                </>)}
+                )}
                 <li><Link to="/login" onClick={handleLogoutClick}>Logout</Link></li>
             </ul>
         </nav>

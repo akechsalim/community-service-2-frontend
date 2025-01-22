@@ -60,3 +60,37 @@ body {
     opacity: 1;
     visibility: visible;
 }
+.sponsor-modal {
+    position: fixed; /* Changed from absolute to fixed */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Ensure it's above other content */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sponsor-modal .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px; /* Adjust as needed */
+    max-width: 90%; /* Make sure it's responsive */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.sponsor-modal .modal-content button {
+    display: block; /* Make buttons block elements */
+    width: 100%; /* Full width of the modal */
+    margin-top: 10px; /* Add spacing between buttons */
+}
+
+/* When the modal is open, blur and dim the background */
+.event-list-container.sponsor-modal-open {
+    filter: blur(5px);
+    pointer-events: none;
+    opacity: 0.5;
+}

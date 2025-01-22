@@ -67,12 +67,12 @@ function App() {
                 <Route path="/event-form" element={<EventForm/>}/>
                 <Route path="/admin" element={
                     <PrivateRoute>
-                        <AdminDashboard />
+                        <AdminDashboard userRole={role} onLogout={handleLogout}/>
                     </PrivateRoute>
                 } />
                 <Route path="/volunteer" element={
                     <PrivateRoute>
-                        <VolunteerDashboard />
+                        <VolunteerDashboard  />
                     </PrivateRoute>
                 } />
             </Routes>

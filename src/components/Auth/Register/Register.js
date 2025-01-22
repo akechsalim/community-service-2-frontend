@@ -42,6 +42,8 @@ const Register = ({handleLogin}) => {
                 >
                     <option value="VOLUNTEER">Volunteer</option>
                     <option value="ADMIN">Admin</option>
+                    <option value="SPONSOR">Sponsor</option>
+                    <option value="LOCAL">Local</option>
                 </select>
                 <button type="submit">Register</button>
                 {error && <p style={{color: 'red'}}>{error}</p>}

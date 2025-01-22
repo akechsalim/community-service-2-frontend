@@ -1,7 +1,7 @@
 import React from 'react';
 import './EventCard.css';
 
-const EventCard = ({ event, onEdit, onDelete, onDetails }) => {
+const EventCard = ({ event, onEdit, onDelete, onDetails,children }) => {
     return (
         <div className="event-card">
             <h2>{event.name}</h2>
@@ -13,6 +13,7 @@ const EventCard = ({ event, onEdit, onDelete, onDetails }) => {
                 {onEdit && <button className="edit-button" onClick={() => onEdit(event)}>Edit</button>}
                 {onDelete && <button className="delete-button" onClick={() => onDelete(event.id)}>Delete</button>}
             </div>
+            {children}
         </div>
     );
 };

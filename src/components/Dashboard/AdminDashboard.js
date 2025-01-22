@@ -1,129 +1,198 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './AdminDashboard.css';
 import AuthService from "../Auth/Services/authService";
 
 const AdminDashboard = () => {
     const [volunteers, setVolunteers] = useState([]);
+    const [sponsors, setSponsors] = useState([]);
     const [selectedVolunteer, setSelectedVolunteer] = useState(null);
-    const [showTaskModal, setShowTaskModal] = useState(false);
-    const [showAssignModal, setShowAssignModal] = useState(false);
-    const [task, setTask] = useState({ title: '', description: '' });
-
-
-
-    const fetchVolunteers = async () => {
-        try {
-            const headers = AuthService.getAuthHeaders();
-            const response = await axios.get('http://localhost:8080/api/admin/volunteers', { headers });
-            setVolunteers(response.data);
-        } catch (error) {
-            console.error('Failed to fetch volunteers:', error);
-        }
-    };
+    const [searchTerm, setSearchTerm] = useState('');
+    const [task, setTask] = useState({title: '', description: ''});
+    const [sponsorships, setSponsorships] = useState([]);
+    const [selectedSponsor, setSelectedSponsor] = useState(null);
+    const [filteredUsers, setFilteredUsers] = useState({
+        volunteers: [],
+        sponsors: []
+    });
 
     useEffect(() => {
-        fetchVolunteers();
+        fetchData();
     }, []);
 
-    const handleVolunteerClick = (volunteer) => {
-        setSelectedVolunteer(volunteer);
-        setShowTaskModal(true);
-    };
-    const handleAssignTaskClick = () => {
-        setShowAssignModal(true);
-    };
+    useEffect(() => {
+        applyFilter();
+    }, [searchTerm, volunteers, sponsors]);
 
-    const handleCloseModal = () => {
+    useEffect(() => {
+        if (selectedSponsor) {
+            fetchSponsorSponsorships();
+        }
         setSelectedVolunteer(null);
-        setShowTaskModal(false);
-        setShowAssignModal(false);
-    };
 
-    const handleAssignTask = async volunteerId => {
+    }, [selectedSponsor]);
+
+    useEffect(() => {
+        // Close sponsor details if volunteer details are opened
+        setSelectedSponsor(null);
+    }, [selectedVolunteer]);
+
+    const fetchData = async () => {
         try {
             const headers = AuthService.getAuthHeaders();
-            await axios.post('http://localhost:8080/api/admin/tasks', {
-                ...task,
-                volunteerId
-            }, { headers });
-            setShowAssignModal(false);
-            setTask({ title: '', description: '' });
-            // Optionally, fetch updated volunteer list here
-            await fetchVolunteers(); // Assuming fetchVolunteers is defined within the component scope
+            const [volunteersResponse, sponsorsResponse] = await Promise.all([
+                axios.get('http://localhost:8080/api/admin/volunteers', {headers}),
+                axios.get('http://localhost:8080/api/admin/sponsors', {headers})
+            ]);
+            setVolunteers(volunteersResponse.data);
+            setSponsors(sponsorsResponse.data);
         } catch (error) {
-            console.error('Failed to assign task:', error);
+            console.error('Failed to fetch data:', error);
+        }
+    }
+    const fetchSponsorSponsorships = async () => {
+        try {
+            const headers = AuthService.getAuthHeaders();
+            const response = await axios.get(`http://localhost:8080/api/events/sponsorships/sponsor/${selectedSponsor.id}`, {headers});
+            setSponsorships(response.data);
+        } catch (error) {
+            console.error('Failed to fetch sponsorships:', error);
+        }
+    };
+    const applyFilter = () => {
+        const term = searchTerm.toLowerCase();
+        const filterFunction = user =>
+            user.username.toLowerCase().includes(term) ||
+            (user.name && user.name.toLowerCase().includes(term));
+
+        setFilteredUsers({
+            volunteers: volunteers.filter(filterFunction),
+            sponsors: sponsors.filter(filterFunction)
+        });
+    };
+    const handleSearchChange = (e) => setSearchTerm(e.target.value);
+
+    const handleVolunteerClick = (volunteer) => setSelectedVolunteer(volunteer);
+    const handleSponsorClick = (sponsor) => setSelectedSponsor(sponsor);
+
+    const handleAssignTask = async (volunteerId) => {
+        if (selectedVolunteer) {
+            try {
+                const headers = AuthService.getAuthHeaders();
+                await axios.post('http://localhost:8080/api/admin/tasks', {
+                    title: task.title,
+                    description: task.description,
+                    volunteerId: selectedVolunteer.id
+                }, {headers});
+                setTask({title: '', description: ''});
+                fetchData(); // Refresh volunteer list after assignment
+            } catch (error) {
+                console.error('Failed to assign task:', error);
+            }
         }
     };
 
     const handleCompleteTask = async (taskId) => {
         try {
             const headers = AuthService.getAuthHeaders();
-            await axios.post(`http://localhost:8080/api/admin/tasks/${taskId}/complete`, {}, { headers });
-            // // Refresh the volunteer data to update the UI
-            const response = await axios.get('http://localhost:8080/api/admin/volunteers', { headers });
-            setVolunteers(response.data);
-            // Optionally, keep the modal open for the updated volunteer if needed
-            const updatedVolunteer = response.data.find(v => v.id === selectedVolunteer.id);
-            setSelectedVolunteer(updatedVolunteer);
+            await axios.post(`http://localhost:8080/api/admin/tasks/${taskId}/complete`, {}, {headers});
+            fetchData(); // Refresh volunteer list after task completion
         } catch (error) {
             console.error('Failed to mark task as complete:', error);
         }
     };
 
     return (
-        <div className="admin-dashboard">
-            <h2>Volunteers</h2>
-            <div className="volunteer-list">
-                {volunteers.map(volunteer => (
-                    <VolunteerCard
-                        key={volunteer.id}
-                        volunteer={volunteer}
-                        onClick={() => handleVolunteerClick(volunteer)}
-                    />
-                ))}
+        <>
+            <div className="admin-dashboard">
+                <input
+                    type="text"
+                    placeholder="Search for volunteers or sponsors..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className="search-input"
+                />
+                <div className="main-content">
+                    <section id="volunteers">
+                        <h2>Volunteers</h2>
+                        <div className="volunteer-list">
+                            {filteredUsers.volunteers.map(volunteer => (
+                                <VolunteerCard
+                                    key={volunteer.id}
+                                    volunteer={volunteer}
+                                    onClick={() => handleVolunteerClick(volunteer)}
+                                    isSelected={selectedVolunteer && selectedVolunteer.id === volunteer.id}
+                                />
+                            ))}
+                        </div>
+                    </section>
+
+                    <section id="sponsors">
+                        <h2>Sponsors</h2>
+                        <div className="sponsor-list">
+                            {filteredUsers.sponsors.map(sponsor => (
+                                <SponsorCard
+                                    key={sponsor.id}
+                                    sponsor={sponsor}
+                                    onClick={() => handleSponsorClick(sponsor)}/>
+                            ))}
+                        </div>
+                    </section>
+                </div>
             </div>
-            <button onClick={handleAssignTaskClick} className="assign-task-button">Assign Task</button>
 
-            {/* Modal for displaying volunteer tasks */}
-            {showTaskModal && selectedVolunteer && (
-                <TaskModal
-                    volunteer={selectedVolunteer}
-                    onClose={handleCloseModal}
-                    onCompleteTask={handleCompleteTask}
-                />
+            {selectedVolunteer && (
+                <div className="volunteer-details-container">
+                    <VolunteerDetails
+                        volunteer={selectedVolunteer}
+                        onCompleteTask={handleCompleteTask}
+                        onAssignTask={handleAssignTask}
+                        task={task}
+                        setTask={setTask}
+                    >
+                    </VolunteerDetails>
+                </div>
             )}
-
-            {/* Modal for assigning tasks */}
-            {showAssignModal && (
-                <AssignTaskModal
-                    onClose={handleCloseModal}
-                    onAssignTask={handleAssignTask}
-                    task={task}
-                    onTaskChange={setTask}
-                    volunteers={volunteers}
-                />
+            {selectedSponsor && (
+                <div className="sponsor-details-container">
+                    <h3>{selectedSponsor.username}'s Sponsorships</h3>
+                    <ul>
+                        {sponsorships.map(sponsorship => (
+                            <li key={sponsorship.eventId}>
+                                <p>Event ID: {sponsorship.eventId}</p>
+                                <p>Amount Sponsored: ${sponsorship.amount}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             )}
-        </div>
+        </>
     );
 };
 
+
 // Volunteer card component
-const VolunteerCard = ({ volunteer, onClick }) => (
-    <div className="volunteer-card" onClick={onClick}>
+const VolunteerCard = ({volunteer, onClick, isSelected}) => (
+    <div className={`volunteer-card ${isSelected ? 'selected' : ''}`} onClick={onClick}>
         <h3>{volunteer.username}</h3>
     </div>
 );
 
-// Task Modal component
-const TaskModal = ({ volunteer, onClose, onCompleteTask }) => (
-    <div className="task-modal-overlay">
-        <div className="task-modal">
-            <h3>{volunteer.username}'s Tasks</h3>
+const SponsorCard = ({ sponsor, onClick }) => (
+    <div className="sponsor-card" onClick={onClick}>
+        <h3>{sponsor.username || sponsor.name}</h3>
+    </div>
+);
+
+const VolunteerDetails = ({volunteer, onCompleteTask, onAssignTask, task, setTask, sponsorships}) => (
+    <div className="volunteer-details-card">
+        <h3>{volunteer.username}'s Details</h3>
+        <div className="tasks-section">
+            <h4>Tasks</h4>
             {volunteer.tasks && volunteer.tasks.length > 0 ? (
                 volunteer.tasks.map(task => (
                     <div key={task.id} className="task-item">
-                        <h4>{task.title}</h4>
+                        <h5>{task.title}</h5>
                         <p>Description: {task.description}</p>
                         <p>Status: {task.status}</p>
                         <button onClick={() => onCompleteTask(task.id)}>Complete</button>
@@ -132,36 +201,35 @@ const TaskModal = ({ volunteer, onClose, onCompleteTask }) => (
             ) : (
                 <p>No tasks assigned yet.</p>
             )}
-            <button onClick={onClose}>Close</button>
         </div>
-    </div>
-);
-
-// Assign Task Modal component
-const AssignTaskModal = ({ onClose, onAssignTask, task, onTaskChange, volunteers }) => (
-    <div className="modal-overlay">
-        <div className="modal-content">
-            <h3>Assign a Task</h3>
+        <div className="assign-task-section">
+            <h4>Assign New Task</h4>
             <input
                 value={task.title}
-                onChange={(e) => onTaskChange({...task, title: e.target.value})}
+                onChange={(e) => setTask({...task, title: e.target.value})}
                 placeholder="Task Title"
                 required
             />
             <textarea
                 value={task.description}
-                onChange={(e) => onTaskChange({...task, description: e.target.value})}
+                onChange={(e) => setTask({...task, description: e.target.value})}
                 placeholder="Task Description"
                 required
             />
-            <div className="available-volunteers-list">
-                {volunteers.map(volunteer => (
-                    <button key={volunteer.id} onClick={() => onAssignTask(volunteer.id)}>
-                        Assign to {volunteer.username}
-                    </button>
-                ))}
-            </div>
-            <button onClick={onClose}>Cancel</button>
+            <button onClick={onAssignTask}>Assign Task</button>
+        </div>
+        <div className="sponsorship-section">
+            <h4>Sponsorships</h4>
+            {sponsorships && sponsorships.length > 0 ? (
+                sponsorships.filter(sp => sp.sponsorId === volunteer.id).map(sponsorship => (
+                    <div key={sponsorship.sponsorshipLevel} className="sponsorship-item">
+                        <p>Level: {sponsorship.sponsorshipLevel}</p>
+                        <p>Amount: ${sponsorship.amount}</p>
+                    </div>
+                ))
+            ) : (
+                <p>No sponsorships recorded.</p>
+            )}
         </div>
     </div>
 );
