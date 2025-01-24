@@ -9,10 +9,12 @@ import './styles.css';
 import AuthService from "./components/Auth/Services/authService";
 import VolunteerDashboard from "./components/Dashboard/VolunteerDashboard";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
+import ContactPage from "./components/Contact/ContactPage";
+import Homepage from "./components/Homepage/Homepage";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const {role, userId} = AuthService.getUserData();
+    const {role} = AuthService.getUserData();
 
     React.useEffect(() => {
         const checkAuthentication = async () => {
@@ -57,10 +59,7 @@ function App() {
                 <Route path="/register" element={<Register handleLogin={handleLogin}/>}/>
                 <Route path="/" element={ // Home page, could be a different component or simple content
                     <PrivateRoute>
-                        <div style={{textAlign: 'center', padding: '20px'}}>
-                            <h1>Welcome to the Event Management System</h1>
-                            <p>Please use the navigation bar to access events.</p>
-                        </div>
+                        <Homepage/>
                     </PrivateRoute>
                 }/>
                 <Route path="/events" element={<Events/>}/>
@@ -75,6 +74,7 @@ function App() {
                         <VolunteerDashboard  />
                     </PrivateRoute>
                 } />
+                <Route path="/contact" element={<ContactPage />} />
             </Routes>
         </Router>
     );

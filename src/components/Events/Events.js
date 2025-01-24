@@ -33,7 +33,7 @@ const Events = () => {
     const handleEventsUpdate = (updatedEvents) => setEvents(updatedEvents);
 
     return (
-        <div style={{background: '#f4f4f9', color: '#333',textAlign: 'center'}}>
+        <div style={{background: '#f4f4f9', color: '#333', textAlign: 'center'}}>
             <h2 style={{color: '#2c7a7b', textAlign: 'center'}}>Community Events</h2>
             {role === 'ADMIN' &&
                 <button

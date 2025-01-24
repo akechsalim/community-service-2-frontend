@@ -5,28 +5,30 @@ html, body {
     padding: 0; /* Reset padding */
 }
 
-#login-container {
+.login-container {
+    width: 100%;
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* This should work if #login-container is a direct child of body */
-    width: 100%;
-    margin: 0;
-    padding-top: -50px/* Reset margins */
-}
-.login-form {
-    position: relative;
-    top: -150px;
-    max-width: 500px;
-    padding: 60px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: #f0f2f5; /* Light background for contrast */
 }
 
-.login-form h2 {
+.login-card {
+    width: 600px;
+    height: 350px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Header styling within the card */
+.login-card h2 {
     text-align: center;
     color: var(--primary-color);
+    margin-bottom: 20px;
 }
 
 .login-form input {
@@ -65,4 +67,10 @@ html, body {
     align-items: center;
     height: 100vh;
     margin: 0;
+}
+
+h4 {
+    text-align: center;
+    font-weight: lighter;
+    font-size: large;
 }

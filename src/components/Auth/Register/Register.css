@@ -1,36 +1,50 @@
-/* Styles for .register-form to look like a card */
-#register-form-container {
+/* General container to center the card */
+.register-container {
     width: 100%;
-    height: 100vh;
+    height: 70vh;
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    background: #f0f2f5; /* Light background for contrast */
 }
-.register-form {
-    top: -150px;
-    max-width: 500px;
-    margin: 0 auto;
+
+/* Card styling */
+.register-card {
+    width: 600px;
+    height: 350px;
     padding: 20px;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-.register-form h2 {
+/* Header styling within the card */
+.register-card h2 {
     text-align: center;
     color: var(--primary-color);
+    margin-bottom: 20px;
 }
 
+/* Form inputs and select */
 .register-form input,
 .register-form select {
-    display: block;
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ddd;
+    border: 1px solid #e0e0e0;
     border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+.register-form input:focus,
+.register-form select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Button styling */
 .register-form button {
     width: 100%;
     padding: 10px;
@@ -46,4 +60,15 @@
     background-color: var(--primary-green-hover);
 }
 
+/* Error message styling */
+.error-message {
+    color: #ff4136;
+    text-align: center;
+    margin-top: 10px;
+}
 
+/* Simple animation for card appearance */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

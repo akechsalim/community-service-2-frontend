@@ -22,23 +22,25 @@ const Navbar = ({userRole, onLogout}) => {
     return (
         <nav className="navbar">
             <ul className="nav-list">
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/events">Events</Link></li>
+                <li><Link to="/">home</Link></li>
+                <li><Link to="/events">events</Link></li>
                 {userRole === 'ADMIN' && (
                     <li className="dropdown">
-                        <a href="#" className="dropbtn">Admin Dashboard</a>
+                        <a href="#" className="dropbtn">admin dashboard</a>
                         <div className="dropdown-content">
-                            <button onClick={() => scrollToSection('volunteers')} className="dropdown-link">Volunteers
+                            <button onClick={() => scrollToSection('volunteers')} className="dropdown-link">volunteers
                             </button>
-                            <button onClick={() => scrollToSection('sponsors')} className="dropdown-link">Sponsors
+                            <button onClick={() => scrollToSection('sponsors')} className="dropdown-link">sponsors
                             </button>
                         </div>
                     </li>
                 )}
                 {userRole === 'VOLUNTEER' && (
-                    <li><Link to="/volunteer">Volunteer Dashboard</Link></li>
+                    <li><Link to="/volunteer">volunteer dashboard</Link></li>
                 )}
-                <li><Link to="/login" onClick={handleLogoutClick}>Logout</Link></li>
+                <li><Link to="/contact">contact page</Link></li>
+                <li><Link to="/login" onClick={handleLogoutClick}>logout</Link></li>
+
             </ul>
         </nav>
     );
