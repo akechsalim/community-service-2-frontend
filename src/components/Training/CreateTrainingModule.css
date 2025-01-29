@@ -1,0 +1,57 @@
+/* CreateTrainingModule.css */
+.create-training-module {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.create-training-module h2 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.create-training-module label {
+    display: block;
+    font-size: 1rem;
+    color: #34495e;
+    margin-bottom: 5px;
+}
+
+.create-training-module input,
+.create-training-module textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.create-training-module textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.create-training-module button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #27ae60;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-training-module button:hover {
+    background-color: #219653;
+}

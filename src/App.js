@@ -11,6 +11,8 @@ import VolunteerDashboard from "./components/Dashboard/VolunteerDashboard";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import ContactPage from "./components/Contact/ContactPage";
 import Homepage from "./components/Homepage/Homepage";
+import TrainingModules from "./components/Training/TrainingModules";
+import TrainingModuleList from "./components/Training/TrainingModuleList";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -69,6 +71,12 @@ function App() {
                         <AdminDashboard userRole={role} onLogout={handleLogout}/>
                     </PrivateRoute>
                 } />
+                <Route path="/training-modules" element={
+                    <PrivateRoute>
+                        {role === 'ADMIN' ? <TrainingModules /> : <Navigate to="/" />}
+                    </PrivateRoute>
+                } />
+                <Route path="/training-modules" element={<TrainingModuleList />} />
                 <Route path="/volunteer" element={
                     <PrivateRoute>
                         <VolunteerDashboard  />

@@ -11,11 +11,11 @@ const Navbar = ({userRole, onLogout}) => {
         navigate("/login"); // Manually navigate to the login page
     };
     const scrollToSection = (id) => {
-        navigate('/admin', { replace: true }); // Navigate to admin page if not there
+        navigate('/admin', {replace: true}); // Navigate to admin page if not there
         setTimeout(() => {
             const element = document.getElementById(id);
             if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                element.scrollIntoView({behavior: 'smooth', block: 'start'});
             }
         }, 100); // A small delay to ensure navigation has completed
     };
@@ -32,9 +32,13 @@ const Navbar = ({userRole, onLogout}) => {
                             </button>
                             <button onClick={() => scrollToSection('sponsors')} className="dropdown-link">sponsors
                             </button>
+
                         </div>
                     </li>
                 )}
+                {userRole === 'ADMIN' && (
+                    <li><Link to="/training-modules">training modules</Link></li>)}
+
                 {userRole === 'VOLUNTEER' && (
                     <li><Link to="/volunteer">volunteer dashboard</Link></li>
                 )}
