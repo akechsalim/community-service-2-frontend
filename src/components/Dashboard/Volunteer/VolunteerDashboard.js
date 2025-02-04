@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './VolunteerDashboard.css';
-import AuthService from "../Auth/Services/authService";
+import AuthService from "../../Auth/Services/authService";
 
 const VolunteerDashboard = () => {
     const [tasks, setTasks] = useState([]);

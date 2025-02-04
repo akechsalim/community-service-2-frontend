@@ -7,12 +7,14 @@ import Register from './components/Auth/Register/Register';
 import EventForm from './components/Events/EventForm/EventForm';
 import './styles.css';
 import AuthService from "./components/Auth/Services/authService";
-import VolunteerDashboard from "./components/Dashboard/VolunteerDashboard";
-import AdminDashboard from "./components/Dashboard/AdminDashboard";
+import VolunteerDashboard from "./components/Dashboard/Volunteer/VolunteerDashboard";
+import AdminDashboard from "./components/Dashboard/Admin/AdminDashboard";
 import ContactPage from "./components/Contact/ContactPage";
 import Homepage from "./components/Homepage/Homepage";
-import TrainingModules from "./components/Training/TrainingModules";
 import TrainingModuleList from "./components/Training/TrainingModuleList";
+import CreateTrainingModule from "./components/Training/CreateTrainingModule";
+import VolunteerProgress from "./components/Dashboard/Admin/VolunteerProgress";
+import TrainingModuleDetails from "./components/Training/TrainingModuleDetails";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,19 +39,21 @@ function App() {
 
         checkAuthentication();
     }, []);
+
     // Helper function to handle login
-    const handleLogin = (token, username, role,userId) => {
-        AuthService.setUserData(token, username, role,userId);
+    const handleLogin = (token, username, role, userId) => {
+        AuthService.setUserData(token, username, role, userId);
         setIsAuthenticated(true);
     };
+
     // Logout function
     const handleLogout = () => {
         AuthService.clearUserData();
         setIsAuthenticated(false);
     };
 
-    const PrivateRoute = ({ children }) => {
-        if (!isAuthenticated) return <Navigate to="/login" />;
+    const PrivateRoute = ({children}) => {
+        if (!isAuthenticated) return <Navigate to="/login"/>;
         return children;
     };
 
@@ -59,30 +63,16 @@ function App() {
             <Routes>
                 <Route path="/login" element={<Login handleLogin={handleLogin}/>}/>
                 <Route path="/register" element={<Register handleLogin={handleLogin}/>}/>
-                <Route path="/" element={ // Home page, could be a different component or simple content
-                    <PrivateRoute>
-                        <Homepage/>
-                    </PrivateRoute>
-                }/>
+                <Route path="/" element={<PrivateRoute><Homepage/></PrivateRoute>}/>
                 <Route path="/events" element={<Events/>}/>
                 <Route path="/event-form" element={<EventForm/>}/>
-                <Route path="/admin" element={
-                    <PrivateRoute>
-                        <AdminDashboard userRole={role} onLogout={handleLogout}/>
-                    </PrivateRoute>
-                } />
-                <Route path="/training-modules" element={
-                    <PrivateRoute>
-                        {role === 'ADMIN' ? <TrainingModules /> : <Navigate to="/" />}
-                    </PrivateRoute>
-                } />
-                <Route path="/training-modules" element={<TrainingModuleList />} />
-                <Route path="/volunteer" element={
-                    <PrivateRoute>
-                        <VolunteerDashboard  />
-                    </PrivateRoute>
-                } />
-                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/admin" element={<PrivateRoute><AdminDashboard userRole={role} onLogout={handleLogout}/></PrivateRoute>}/>
+                <Route path="/create-training-module" element={<CreateTrainingModule/>}/>
+                <Route path="/training-modules" element={<TrainingModuleList/>}/>
+                <Route path="/volunteer" element={<PrivateRoute><VolunteerDashboard/></PrivateRoute>}/>
+                <Route path="/contact" element={<ContactPage/>}/>
+                <Route path='/admin/dashboard' element={<VolunteerProgress/>}/>
+                <Route path="/training-modules/:moduleId" element={<TrainingModuleDetails />} />
             </Routes>
         </Router>
     );

@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import './AdminDashboard.css';
-import AuthService from "../Auth/Services/authService";
+import AuthService from "../../Auth/Services/authService";
 
 const AdminDashboard = () => {
     const [volunteers, setVolunteers] = useState([]);
@@ -15,6 +15,17 @@ const AdminDashboard = () => {
         volunteers: [],
         sponsors: []
     });
+    const applyFilter = useCallback(() => {
+        const term = searchTerm.toLowerCase();
+        const filterFunction = user =>
+            user.username.toLowerCase().includes(term) ||
+            (user.name && user.name.toLowerCase().includes(term));
+
+        setFilteredUsers({
+            volunteers: volunteers.filter(filterFunction),
+            sponsors: sponsors.filter(filterFunction)
+        });
+    }, [searchTerm, volunteers, sponsors]);
 
     useEffect(() => {
         fetchData();
@@ -22,15 +33,14 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         applyFilter();
-    }, [searchTerm, volunteers, sponsors]);
+    }, [ applyFilter]);
 
     useEffect(() => {
         if (selectedSponsor) {
             fetchSponsorSponsorships();
         }
         setSelectedVolunteer(null);
-
-    }, [selectedSponsor]);
+    }, [selectedSponsor, fetchSponsorSponsorships]);
 
     useEffect(() => {
         // Close sponsor details if volunteer details are opened
@@ -50,7 +60,8 @@ const AdminDashboard = () => {
             console.error('Failed to fetch data:', error);
         }
     }
-    const fetchSponsorSponsorships = async () => {
+
+    const fetchSponsorSponsorships = useCallback(async () => {
         try {
             const headers = AuthService.getAuthHeaders();
             const response = await axios.get(`http://localhost:8080/api/events/sponsorships/sponsor/${selectedSponsor.id}`, {headers});
@@ -58,18 +69,9 @@ const AdminDashboard = () => {
         } catch (error) {
             console.error('Failed to fetch sponsorships:', error);
         }
-    };
-    const applyFilter = () => {
-        const term = searchTerm.toLowerCase();
-        const filterFunction = user =>
-            user.username.toLowerCase().includes(term) ||
-            (user.name && user.name.toLowerCase().includes(term));
+    }, [selectedSponsor]);
 
-        setFilteredUsers({
-            volunteers: volunteers.filter(filterFunction),
-            sponsors: sponsors.filter(filterFunction)
-        });
-    };
+
     const handleSearchChange = (e) => setSearchTerm(e.target.value);
 
     const handleVolunteerClick = (volunteer) => setSelectedVolunteer(volunteer);

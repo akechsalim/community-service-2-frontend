@@ -2,23 +2,34 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import AuthService from "../Auth/Services/authService";
 import './TrainingModuleList.css';
+import {Link} from "react-router-dom";
 
 const TrainingModuleList = () => {
     const [modules, setModules] = useState([]);
+    const [progress, setProgress] = useState([]);
 
     useEffect(() => {
-        const fetchModules = async () => {
+        const fetchData = async () => {
             try {
                 const authHeaders = AuthService.getAuthHeaders();
-                const response = await axios.get('http://localhost:8080/api/training-modules', {
+                const volunteerId = AuthService.getUserId();
+
+                // Fetch modules
+                const modulesResponse = await axios.get('http://localhost:8080/api/training-modules', {
                     headers: authHeaders
                 });
-                setModules(response.data);
+                setModules(modulesResponse.data);
+
+                // Fetch progress for the logged-in volunteer
+                const progressResponse = await axios.get(`http://localhost:8080/api/training-progress/volunteer/${volunteerId}`, {
+                    headers: authHeaders
+                });
+                setProgress(progressResponse.data);
             } catch (error) {
-                console.error('Error fetching training modules:', error);
+                console.error('Error fetching data:', error);
             }
         };
-        fetchModules();
+        fetchData();
     }, []);
 
     const markAsCompleted = async (moduleId) => {
@@ -30,10 +41,20 @@ const TrainingModuleList = () => {
                 params: { volunteerId, moduleId }
             });
             alert('Module marked as completed!');
+            // Refresh progress after marking as completed
+            const progressResponse = await axios.get(`http://localhost:8080/api/training-progress/volunteer/${volunteerId}`, {
+                headers: authHeaders
+            });
+            setProgress(progressResponse.data);
         } catch (error) {
             console.error('Error marking module as completed:', error);
         }
     };
+
+    const isModuleCompleted = (moduleId) => {
+        return progress.some(p => p.module.id === moduleId && p.completed);
+    };
+
     const downloadCertificate = async (moduleId) => {
         try {
             const volunteerId = AuthService.getUserId();
@@ -59,11 +80,16 @@ const TrainingModuleList = () => {
             {modules.length > 0 ? (
                 modules.map(module => (
                     <div key={module.id} className="module-card">
-                        <h2>{module.title}</h2>
+                        <h2>
+                            <Link to={`/training-modules/${module.id}`}>{module.title}</Link>
+                        </h2>
                         <p>{module.description}</p>
-                        <a href={`/training-modules/${module.id}`}>View Details</a>
                         <button onClick={() => markAsCompleted(module.id)}>Mark as Completed</button>
-                        <button onClick={() => downloadCertificate(module.id)}>Download Certificate</button>
+                        {isModuleCompleted(module.id) ? (
+                            <button onClick={() => downloadCertificate(module.id)}>Download Certificate</button>
+                        ) : (
+                            <p>Complete the module to download the certificate.</p>
+                        )}
                     </div>
                 ))
             ) : (
