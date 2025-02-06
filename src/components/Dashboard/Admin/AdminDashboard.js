@@ -26,6 +26,15 @@ const AdminDashboard = () => {
             sponsors: sponsors.filter(filterFunction)
         });
     }, [searchTerm, volunteers, sponsors]);
+    const fetchSponsorSponsorships = useCallback(async () => {
+        try {
+            const headers = AuthService.getAuthHeaders();
+            const response = await axios.get(`http://localhost:8080/api/events/sponsorships/sponsor/${selectedSponsor.id}`, {headers});
+            setSponsorships(response.data);
+        } catch (error) {
+            console.error('Failed to fetch sponsorships:', error);
+        }
+    }, [selectedSponsor]);
 
     useEffect(() => {
         fetchData();
@@ -59,18 +68,7 @@ const AdminDashboard = () => {
         } catch (error) {
             console.error('Failed to fetch data:', error);
         }
-    }
-
-    const fetchSponsorSponsorships = useCallback(async () => {
-        try {
-            const headers = AuthService.getAuthHeaders();
-            const response = await axios.get(`http://localhost:8080/api/events/sponsorships/sponsor/${selectedSponsor.id}`, {headers});
-            setSponsorships(response.data);
-        } catch (error) {
-            console.error('Failed to fetch sponsorships:', error);
-        }
-    }, [selectedSponsor]);
-
+    };
 
     const handleSearchChange = (e) => setSearchTerm(e.target.value);
 

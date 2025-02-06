@@ -7,6 +7,7 @@ import './TrainingModuleDetails.css';
 const TrainingModuleDetails = () => {
     const {moduleId} = useParams();
     const [module, setModule] = useState(null);
+    const [isCompleted, setIsCompleted] = useState(false);
 
     useEffect(() => {
         const fetchModuleDetails = async () => {
@@ -16,12 +17,37 @@ const TrainingModuleDetails = () => {
                     headers: authHeaders
                 });
                 setModule(response.data);
+
+                // Check if the module is already completed by the user
+                const volunteerId = AuthService.getUserId();
+                const progressResponse = await axios.get(`http://localhost:8080/api/training-progress/volunteer/${volunteerId}`, {
+                    headers: authHeaders
+                });
+                const progress = progressResponse.data.find(p => p.module.id === parseInt(moduleId));
+                if (progress && progress.completed) {
+                    setIsCompleted(true);
+                }
             } catch (error) {
                 console.error('Error fetching module details:', error);
             }
         };
         fetchModuleDetails();
     }, [moduleId]);
+
+    const markAsCompleted = async () => {
+        try {
+            const authHeaders = AuthService.getAuthHeaders();
+            const volunteerId = AuthService.getUserId();
+            await axios.post('http://localhost:8080/api/training-progress', null, {
+                headers: authHeaders,
+                params: { volunteerId, moduleId }
+            });
+            alert('Module marked as completed!');
+            setIsCompleted(true);
+        } catch (error) {
+            console.error('Error marking module as completed:', error);
+        }
+    };
 
     if (!module) {
         return <p>Loading...</p>;
@@ -55,8 +81,12 @@ const TrainingModuleDetails = () => {
                     ></iframe>
                 </div>
             )}
+            {!isCompleted && (
+                <button onClick={markAsCompleted}>Mark as Completed</button>
+            )}
         </div>
     );
+
 };
 
 export default TrainingModuleDetails;

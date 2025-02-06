@@ -32,34 +32,25 @@ const TrainingModuleList = () => {
         fetchData();
     }, []);
 
-    const markAsCompleted = async (moduleId) => {
-        try {
-            const authHeaders = AuthService.getAuthHeaders();
-            const volunteerId = AuthService.getUserId();
-            await axios.post('http://localhost:8080/api/training-progress', null, {
-                headers: authHeaders,
-                params: { volunteerId, moduleId }
-            });
-            alert('Module marked as completed!');
-            // Refresh progress after marking as completed
-            const progressResponse = await axios.get(`http://localhost:8080/api/training-progress/volunteer/${volunteerId}`, {
-                headers: authHeaders
-            });
-            setProgress(progressResponse.data);
-        } catch (error) {
-            console.error('Error marking module as completed:', error);
-        }
-    };
-
     const isModuleCompleted = (moduleId) => {
         return progress.some(p => p.module.id === moduleId && p.completed);
     };
 
     const downloadCertificate = async (moduleId) => {
         try {
+            const authHeaders = AuthService.getAuthHeaders();
             const volunteerId = AuthService.getUserId();
+            const progressResponse = await axios.get(`http://localhost:8080/api/training-progress/volunteer/${volunteerId}`, {
+                headers: authHeaders
+            });
+            const progress = progressResponse.data.find(p => p.module.id === parseInt(moduleId));
+            if (!progress || !progress.certificateApproved) {
+                alert('Certificate download not approved yet.');
+                return;
+            }
+
             const response = await axios.get('http://localhost:8080/api/certificates/generate', {
-                headers: AuthService.getAuthHeaders(),
+                headers: authHeaders,
                 params: { volunteerId, moduleId },
                 responseType: 'blob'
             });
@@ -84,7 +75,6 @@ const TrainingModuleList = () => {
                             <Link to={`/training-modules/${module.id}`}>{module.title}</Link>
                         </h2>
                         <p>{module.description}</p>
-                        <button onClick={() => markAsCompleted(module.id)}>Mark as Completed</button>
                         {isModuleCompleted(module.id) ? (
                             <button onClick={() => downloadCertificate(module.id)}>Download Certificate</button>
                         ) : (
