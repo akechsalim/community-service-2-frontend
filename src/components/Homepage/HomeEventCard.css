@@ -1,0 +1,53 @@
+/* HomeEventCard.css */
+.home-event-card {
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border-radius: 15px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for depth */
+    color: white; /* Ensure text is readable on the glassy background */
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-event-card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.home-event-card h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.home-event-card .home-description {
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.home-event-card p {
+    margin: 5px 0;
+}
+
+.home-event-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.home-details-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.home-details-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
