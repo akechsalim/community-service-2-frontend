@@ -59,8 +59,8 @@ const EventModal = ({event, onClose, onUpdate, mode = 'view'}) => {
                             onChange={handleInputChange}
                             required
                         />
-                        <button type="submit">Update Event</button>
-                        <button type="button" onClick={onClose}>Cancel</button>
+                        <button type="submit" className="modal-button-update">Update Event</button>
+                        <button type="button" onClick={onClose} className="modal-button-cancel">Cancel</button>
                     </form>
                 ) : (
                     <>
@@ -69,7 +69,7 @@ const EventModal = ({event, onClose, onUpdate, mode = 'view'}) => {
                         <p>
                             <strong>Time:</strong> {new Date(event.startTime).toLocaleString()} - {new Date(event.endTime).toLocaleString()}
                         </p>
-                        <button onClick={onClose}>Close</button>
+                        <button onClick={onClose} className="modal-button-close">Close</button>
                     </>
                 )}
             </div>

@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url('E:/Javascript/local projects/community-service-2-frontend/community-service-management-2/public/images/communityServiceImage1.jpg') no-repeat center center/cover;
+    color: white;
+    overflow: hidden;
+}
+
+/*.events-page {*/
+/*    text-align: center;*/
+/*    padding: 20px;*/
+/*}*/
+.events-page {
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.events-title {
+    color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.create-event-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+    font-size: 1rem; /* Adjust if needed for consistency */
+}
+
+.create-event-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}

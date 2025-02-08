@@ -1,22 +1,33 @@
 .event-modal {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.event-modal.open {
+    opacity: 1;
+    visibility: visible;
 }
 
 .modal-content {
-    background-color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
     padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
 }
 
 .modal-content input,
@@ -24,39 +35,28 @@
     width: 100%;
     margin: 10px 0;
     padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
-.modal-content button {
-    padding: 8px 16px;
-    border-radius: 4px;
-    border: none;
-    background-color: #4CAF50;
+.modal-button-update, .modal-button-cancel, .modal-button-close {
+    background-color: rgba(255, 255, 255, 0.2);
     color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
 }
 
-.modal-content button[type="button"] {
-    background-color: #F08080; /* Red for cancel */
+.modal-button-update:hover, .modal-button-cancel:hover, .modal-button-close:hover {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .modal-content h2 {
     margin-bottom: 20px;
-}
-
-.edit-modal.open .modal-content {
-    animation: slideIn 0.3s ease-out;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
 }
