@@ -1,25 +1,26 @@
 /* HomeEventCard.css */
 .home-event-card {
-    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-    backdrop-filter: blur(10px); /* Frosted glass effect */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     border-radius: 15px;
     padding: 20px;
     width: 300px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for depth */
-    color: white; /* Ensure text is readable on the glassy background */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
     text-align: left;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .home-event-card:hover {
-    transform: translateY(-5px); /* Slight lift on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .home-event-card h2 {
     margin-top: 0;
     font-size: 1.5rem;
+    color: white;
 }
 
 .home-event-card .home-description {
@@ -29,6 +30,7 @@
 
 .home-event-card p {
     margin: 5px 0;
+    color: white;
 }
 
 .home-event-actions {

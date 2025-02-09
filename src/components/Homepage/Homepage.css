@@ -1,16 +1,15 @@
-/* Homepage.css */
 .homepage {
     padding: 0;
     text-align: center;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    background: url('E:/Javascript/local projects/community-service-2-frontend/community-service-management-2/public/images/communityServiceImage1.jpg') no-repeat center center/cover; /* Background image */
-    color: white; /* Text color for better contrast */
+    background: url('E:/Javascript/local projects/community-service-2-frontend/community-service-management-2/public/images/community-service-1.jpg') no-repeat center center/cover;
+    color: white;
 }
 
 .hero-section {
-    flex: 1; /* Take up remaining space */
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,13 +20,13 @@
 .hero-headline {
     font-size: 3rem;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better readability */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subheadline {
     font-size: 1.5rem;
     margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Add shadow for better readability */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .cta-button {
@@ -49,10 +48,13 @@
 .events-section {
     margin: 40px 0;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background for better readability */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: #333333;
+}
+.events-section h2{
+    color: white;
 }
 
 .event-cards-2{

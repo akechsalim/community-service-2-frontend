@@ -6,7 +6,7 @@ import './Events.css';
 
 const Events = () => {
     const [events, setEvents] = useState([]);
-    const {role} = AuthService.getUserData(); // Retrieve role here
+    const {role} = AuthService.getUserData();
 
     useEffect(() => {
         const fetchData = async () => {

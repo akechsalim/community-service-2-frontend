@@ -30,7 +30,6 @@ const Homepage = () => {
 
     return (
         <div className="homepage">
-            {/* Hero Section */}
             <div className="hero-section">
                 <div className="hero-content">
                     <h1 className="hero-headline">Empowering Communities, Simplifying Service</h1>

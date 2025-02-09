@@ -1,13 +1,12 @@
-
 .event-card {
-    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white for the frosted glass effect */
-    backdrop-filter: blur(10px); /* Frosted glass effect */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for depth */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     padding: 15px;
-    width: 100%; /* Assuming cards naturally take this width if not specified */
+    width: 95%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: #333; /* Keep original text color */
+    color: #333;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -32,12 +31,13 @@
     color: #e0e0e0;
 }
 
-.event-actions {
+.event-card .event-actions {
     display: flex;
     gap: 10px;
     margin-top: 10px;
 }
-.details-button, .edit-button, .delete-button {
+
+.event-card .details-button, .event-card .edit-button, .event-card .delete-button {
     background-color: rgba(255, 255, 255, 0.2);
     color: white;
     padding: 8px 16px;
@@ -48,6 +48,6 @@
     transition: background-color 0.3s ease;
 }
 
-.details-button:hover, .edit-button:hover, .delete-button:hover {
+.event-card .details-button:hover, .event-card .edit-button:hover, .event-card .delete-button:hover {
     background-color: rgba(255, 255, 255, 0.3);
 }
