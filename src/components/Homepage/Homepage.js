@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import HomeEventCard from "./HomeEventCard";
-import {useNavigate} from 'react-router-dom';
+import HomeEventCard from './HomeEventCard';
+import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
-import AuthService from '../Auth/Services/authService';
 
 const Homepage = () => {
     const [events, setEvents] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch events from the backend
+        // Fetch events from the backend (publicly accessible)
         const fetchEvents = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/events', {
-                    headers: AuthService.getAuthHeaders(),
+                    headers: {
+                        'Content-Type': 'application/json', // No auth headers required
+                    },
                 });
                 setEvents(response.data);
             } catch (error) {
@@ -28,13 +29,19 @@ const Homepage = () => {
     // Display only the first 2 events
     const displayedEvents = events.slice(0, 2);
 
+    const handleLoginRedirect = () => {
+        navigate('/login');
+    };
+
     return (
         <div className="homepage">
             <div className="hero-section">
                 <div className="hero-content">
                     <h1 className="hero-headline">Empowering Communities, Simplifying Service</h1>
                     <p className="hero-subheadline">Manage Your Community Service Activities with Ease</p>
-                    <a href="/signup" className="cta-button">Start Your Trial</a>
+                    <button className="cta-button" onClick={handleLoginRedirect}>
+                        Log in for Training Modules and Dashboard
+                    </button>
                 </div>
             </div>
 

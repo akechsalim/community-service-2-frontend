@@ -1,68 +1,189 @@
-import React from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import './Navbar.css';
 
-const Navbar = ({userRole, onLogout}) => {
+const Navbar = ({ isAuthenticated, userRole, onLogout }) => {
     const navigate = useNavigate();
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // Toggle menu visibility
 
     const handleLogoutClick = (e) => {
         e.preventDefault();
         onLogout();
-        navigate("/login");
+        navigate('/login');
+        setIsMenuOpen(false); // Close menu on logout
     };
 
     const scrollToSection = (id) => {
-        navigate('/admin', {replace: true});
+        navigate('/admin', { replace: true });
         setTimeout(() => {
             const element = document.getElementById(id);
             if (element) {
-                element.scrollIntoView({behavior: 'smooth', block: 'start'});
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }, 100);
+        setIsMenuOpen(false); // Close menu after navigation
+    };
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    // Animation variants for the menu container
+    const menuVariants = {
+        hidden: { opacity: 0, x: '-100%' },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+        exit: { opacity: 0, x: '-100%', transition: { duration: 0.5, ease: 'easeOut' } },
+    };
+
+    // Animation variants for list items
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: (i) => ({
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, ease: 'easeOut', delay: i * 0.2 },
+        }),
+    };
+
+    // Animation variants for dropdown items
+    const dropdownItemVariants = {
+        hidden: { opacity: 0, y: 10 },
+        visible: (i) => ({
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, ease: 'easeOut', delay: i * 0.1 },
+        }),
     };
 
     return (
         <nav className="navbar">
-            <ul className="nav-list">
-                <li><Link to="/">home</Link></li>
-                <li><Link to="/events">events</Link></li>
+            {/* Hamburger Icon */}
+            <button className="hamburger" onClick={toggleMenu}>
+                {isMenuOpen ? '✖' : '☰'} {/* Toggle between hamburger and close icon */}
+            </button>
 
-                {userRole === 'ADMIN' && (
-                    <li className="dropdown">
-                        <button onClick={(e) => e.preventDefault()} className="dropbtn">admin dashboard</button>
-                        <div className="dropdown-content">
-                            <button onClick={() => scrollToSection('volunteers')} className="dropdown-link">volunteers
-                            </button>
-                            <button onClick={() => scrollToSection('sponsors')} className="dropdown-link">sponsors
-                            </button>
-                        </div>
-                    </li>
+            {/* Animated Menu */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        className="nav-menu"
+                        variants={menuVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                    >
+                        <ul className="nav-list">
+                            <motion.li custom={0} variants={itemVariants} initial="hidden" animate="visible">
+                                <Link to="/" onClick={() => setIsMenuOpen(false)}>home</Link>
+                            </motion.li>
+                            <motion.li custom={1} variants={itemVariants} initial="hidden" animate="visible">
+                                <Link to="/events" onClick={() => setIsMenuOpen(false)}>events</Link>
+                            </motion.li>
+
+                            {/* Admin Dashboard Dropdown */}
+                            {isAuthenticated && userRole === 'ADMIN' && (
+                                <motion.li custom={3} variants={itemVariants} initial="hidden" animate="visible"
+                                           className="dropdown">
+                                    <button className="dropbtn" onClick={() => toggleMenu('admin')}>
+                                        admin dashboard
+                                    </button>
+                                    <motion.div className="dropdown-content">
+                                        <motion.button
+                                            custom={0}
+                                            variants={dropdownItemVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            onClick={() => scrollToSection('volunteers')}
+                                            className="dropdown-link"
+                                        >
+                                            volunteers
+                                        </motion.button>
+                                        <motion.button
+                                            custom={1}
+                                            variants={dropdownItemVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            onClick={() => scrollToSection('sponsors')}
+                                            className="dropdown-link"
+                                        >
+                                            sponsors
+                                        </motion.button>
+                                    </motion.div>
+                                </motion.li>
+                            )}
+
+                            {/* Training Module Dropdown */}
+                            {isAuthenticated && userRole === 'ADMIN' && (
+                                <motion.li custom={4} variants={itemVariants} initial="hidden" animate="visible"
+                                           className="dropdown">
+                                    <button className="dropbtn" onClick={() => toggleMenu('training')}>
+                                        Training Module
+                                    </button>
+                                    <motion.div className="dropdown-content">
+                                        <motion.button
+                                            custom={0}
+                                            variants={dropdownItemVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            onClick={() => navigate('/create-training-module')}
+                                            className="dropdown-link"
+                                        >
+                                            Create Training Module
+                                        </motion.button>
+                                        <motion.button
+                                            custom={1}
+                                            variants={dropdownItemVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            onClick={() => navigate('/training-modules')}
+                                            className="dropdown-link"
+                                        >
+                                            View Training Modules
+                                        </motion.button>
+                                        <motion.button
+                                            custom={2}
+                                            variants={dropdownItemVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            onClick={() => navigate('/admin/dashboard')}
+                                            className="dropdown-link"
+                                        >
+                                            Admin Dashboard
+                                        </motion.button>
+                                    </motion.div>
+                                </motion.li>
+                            )}
+
+                            {/* Volunteer Links */}
+                            {isAuthenticated && userRole === 'VOLUNTEER' && (
+                                <motion.li custom={3} variants={itemVariants} initial="hidden" animate="visible">
+                                    <Link to="/volunteer" onClick={() => setIsMenuOpen(false)}>volunteer
+                                        dashboard</Link>
+                                </motion.li>
+                            )}
+                            {isAuthenticated && userRole === 'VOLUNTEER' && (
+                                <motion.li custom={4} variants={itemVariants} initial="hidden" animate="visible">
+                                    <Link to="/training-modules" onClick={() => setIsMenuOpen(false)}>Training
+                                        Modules</Link>
+                                </motion.li>
+                            )}
+                            <motion.li custom={2} variants={itemVariants} initial="hidden" animate="visible">
+                                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>contact page</Link>
+                            </motion.li>
+
+                            {/* Login/Logout */}
+                            <motion.li custom={5} variants={itemVariants} initial="hidden" animate="visible">
+                                {isAuthenticated ? (
+                                    <Link to="/login" onClick={handleLogoutClick}>logout</Link>
+                                ) : (
+                                    <Link to="/login" onClick={() => setIsMenuOpen(false)}>login</Link>
+                                )}
+                            </motion.li>
+                        </ul>
+                    </motion.div>
                 )}
-
-                {userRole === 'ADMIN' && (
-                    <li className="dropdown">
-                        <button onClick={(e) => e.preventDefault()} className="dropbtn">Training Module</button>
-                        <div className="dropdown-content">
-                            <button onClick={() => navigate('/create-training-module')} className="dropdown-link">Create
-                                Training Module
-                            </button>
-                            <button onClick={() => navigate('/training-modules')} className="dropdown-link">View
-                                Training Modules
-                            </button>
-                            <button onClick={() => navigate('/admin/dashboard')} className="dropdown-link">Admin
-                                Dashboard
-                            </button>
-                        </div>
-                    </li>
-                )}
-
-                {userRole === 'VOLUNTEER' && (<li><Link to="/volunteer">volunteer dashboard</Link></li>)}
-                {userRole === 'VOLUNTEER' && (<li><Link to="/training-modules">Training Modules</Link></li>)}
-
-                <li><Link to="/contact">contact page</Link></li>
-                <li><Link to="/login" onClick={handleLogoutClick}>logout</Link></li>
-
-            </ul>
+            </AnimatePresence>
         </nav>
     );
 };
