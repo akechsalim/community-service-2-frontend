@@ -1,11 +1,11 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import './EventModal.css';
 
-const EventModal = ({event, onClose, onUpdate, mode = 'view'}) => {
-    // Handle changes in form inputs
+const EventModal = ({ event, onClose, onUpdate, mode = 'view' }) => {
     const handleInputChange = (e) => {
         if (onUpdate) {
-            onUpdate({...event, [e.target.name]: e.target.value});
+            onUpdate({ ...event, [e.target.name]: e.target.value });
         }
     };
 
@@ -16,8 +16,22 @@ const EventModal = ({event, onClose, onUpdate, mode = 'view'}) => {
         }
     };
 
+    const modalVariants = {
+        hidden: { opacity: 0, scale: 0.9 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: { duration: 0.6, ease: 'easeOut', type: 'spring', bounce: 0.4 },
+        },
+    };
+
     return (
-        <div className="event-modal">
+        <motion.div
+            className="event-modal"
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+        >
             <div className="modal-content">
                 <h2>{mode === 'view' ? 'Event Details' : 'Edit Event'}</h2>
                 {mode === 'edit' ? (
@@ -59,21 +73,44 @@ const EventModal = ({event, onClose, onUpdate, mode = 'view'}) => {
                             onChange={handleInputChange}
                             required
                         />
-                        <button type="submit" className="modal-button-update">Update Event</button>
-                        <button type="button" onClick={onClose} className="modal-button-cancel">Cancel</button>
+                        <motion.button
+                            type="submit"
+                            className="modal-button-update"
+                            whileHover={{ scale: 1.1, backgroundColor: '#ffda79' }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            Update Event
+                        </motion.button>
+                        <motion.button
+                            type="button"
+                            onClick={onClose}
+                            className="modal-button-cancel"
+                            whileHover={{ scale: 1.1, backgroundColor: '#ffda79' }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            Cancel
+                        </motion.button>
                     </form>
                 ) : (
                     <>
                         <p><strong>Description:</strong> {event.description}</p>
                         <p><strong>Location:</strong> {event.location}</p>
                         <p>
-                            <strong>Time:</strong> {new Date(event.startTime).toLocaleString()} - {new Date(event.endTime).toLocaleString()}
+                            <strong>Time:</strong> {new Date(event.startTime).toLocaleString()} -{' '}
+                            {new Date(event.endTime).toLocaleString()}
                         </p>
-                        <button onClick={onClose} className="modal-button-close">Close</button>
+                        <motion.button
+                            onClick={onClose}
+                            className="modal-button-close"
+                            whileHover={{ scale: 1.1, backgroundColor: '#ffda79' }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            Close
+                        </motion.button>
                     </>
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 };
 

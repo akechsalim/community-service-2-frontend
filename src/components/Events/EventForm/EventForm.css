@@ -1,68 +1,64 @@
-/* EventForm.css */
 .event-form-container {
-    width: 100%;
-    height: 100vh;
+    background: linear-gradient(135deg, #1a3c34 0%, #2e8b57 100%); /* Dark green gradient */
+    min-height: 100vh;
+    padding: 80px 20px 40px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 150px;
-    background: url('E:/Javascript/local projects/community-service-2-frontend/community-service-management-2/public/images/communityServiceImage1.jpg') no-repeat center center/cover fixed;
-    position: relative;
-}
-
-.event-form-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1;
 }
 
 .event-form {
     max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.9); /* Light up the form */
+    width: 100%;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass */
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: #333; /* Dark text for contrast */
-    z-index: 2; /* Ensure form is above dimming overlay */
-    position: relative; /* Ensure z-index works */
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .event-form h2 {
     text-align: center;
-    color: #2c7a7b;
+    color: #f4c430; /* Yellow */
+    font-size: 2rem;
+    margin-bottom: 1rem;
 }
 
 .event-form input,
 .event-form textarea {
-    display: block;
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border: 2px solid #f4c430; /* Yellow */
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
     color: #333;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-form input:focus,
+.event-form textarea:focus {
+    border-color: #ffda79; /* Lighter yellow */
+    box-shadow: 0 0 8px rgba(244, 196, 48, 0.5);
+    outline: none;
+}
+
+.event-form textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
 .event-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745; /* Green color for the button */
-    color: white;
+    background: #f4c430; /* Yellow */
+    color: #1a3c34; /* Dark green text */
+    padding: 12px 24px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.event-form button:hover {
-    background-color: #218838; /* Darker green on hover */
+    font-size: 1.2rem;
 }

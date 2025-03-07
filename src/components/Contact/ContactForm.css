@@ -1,64 +1,78 @@
+.contact-container {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+}
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass effect */
+    backdrop-filter: blur(10px); /* Glassy blur */
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
 .contact-form {
-    max-width: 700px;
-    max-height: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #f4f4f4;
-    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-form h1 {
+    text-align: center;
+    color: #ffffff; /* White for contrast */
+    font-size: 2rem;
+    margin-bottom: 0;
 }
 
 .contact-form label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form textarea {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 12px;
+    border: 2px solid #f4c430; /* Yellow border */
+    border-radius: 8px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
     box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #ffda79; /* Lighter yellow */
+    box-shadow: 0 0 8px rgba(244, 196, 48, 0.5);
+    outline: none;
 }
 
 .contact-form textarea {
-    height: 90px;
+    height: 140px;
+    resize: vertical;
 }
 
 .contact-form button {
-    background-color: #007BFF;
-    color: white;
+    background: #f4c430; /* Yellow button */
+    color: #1a3c34; /* Dark green text */
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background 0.3s ease;
+    margin-top: 1rem;
 }
 
 .contact-form button:hover {
-    background-color: #0056b3;
-}
-
-.contact-form h1 {
-    text-align: center;
-    color: #333;
-}
-.contact-container {
-    width: 100%;
-    height: 90vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #f0f2f5;
-}
-.contact-form{
-    width: 900px;
-    height: 500px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.5s ease-in-out;
+    background: #ffda79; /* Lighter yellow */
 }

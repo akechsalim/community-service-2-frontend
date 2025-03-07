@@ -1,46 +1,56 @@
 .quiz {
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass */
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    margin: 2rem auto;
+    width: 100%;
     max-width: 800px;
-    margin: 0 auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .quiz h2 {
     font-size: 2rem;
-    color: #2c3e50;
-    margin-bottom: 20px;
+    color: #f4c430; /* Yellow */
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .quiz div {
-    margin-bottom: 15px;
+    margin-bottom: 1.5rem;
 }
 
 .quiz p {
     font-size: 1.2rem;
-    color: #34495e;
-    margin-bottom: 10px;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
 }
 
 .quiz input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
+    padding: 12px;
+    border: 2px solid #f4c430; /* Yellow */
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
     font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quiz input:focus {
+    border-color: #ffda79; /* Lighter yellow */
+    box-shadow: 0 0 8px rgba(244, 196, 48, 0.5);
+    outline: none;
 }
 
 .quiz button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #27ae60;
-    color: #ffffff;
+    background: #f4c430; /* Yellow */
+    color: #1a3c34; /* Dark green text */
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.quiz button:hover {
-    background-color: #219653;
+    width: 100%;
 }

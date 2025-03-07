@@ -1,53 +1,46 @@
 .event-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass */
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 15px;
-    width: 95%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: #333;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.event-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
 }
 
 .event-card h2 {
-    color: white;
-    margin-bottom: 10px;
+    color: #f4c430; /* Yellow */
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
 }
 
 .event-card .description {
-    font-size: 0.95em;
-    color: #e0e0e0;
-    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
 }
 
 .event-card p {
-    margin: 5px 0;
-    color: #e0e0e0;
+    margin: 0.5rem 0;
+    color: #ffffff;
+    font-size: 1rem;
 }
 
 .event-card .event-actions {
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
-.event-card .details-button, .event-card .edit-button, .event-card .delete-button {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 8px 16px;
+.event-card .details-button,
+.event-card .edit-button,
+.event-card .delete-button {
+    background: #f4c430; /* Yellow */
+    color: #1a3c34; /* Dark green text */
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-}
-
-.event-card .details-button:hover, .event-card .edit-button:hover, .event-card .delete-button:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    font-size: 1rem;
 }

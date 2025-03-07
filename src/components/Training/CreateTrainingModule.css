@@ -1,57 +1,72 @@
-/* CreateTrainingModule.css */
 .create-training-module {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #1a3c34 0%, #2e8b57 100%);
+    min-height: 100vh;
+    padding: 80px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .create-training-module h1 {
-    font-size: 2rem;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 3rem;
+    color: #f4c430; /* Yellow */
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.create-training-module form {
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass */
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .create-training-module label {
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
     display: block;
-    font-size: 1rem;
-    color: #34495e;
-    margin-bottom: 5px;
 }
 
 .create-training-module input,
 .create-training-module textarea {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    font-size: 1rem;
+    padding: 12px;
+    border: 2px solid #f4c430; /* Yellow */
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
     color: #333;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.create-training-module input:focus,
+.create-training-module textarea:focus {
+    border-color: #ffda79; /* Lighter yellow */
+    box-shadow: 0 0 8px rgba(244, 196, 48, 0.5);
+    outline: none;
 }
 
 .create-training-module textarea {
+    min-height: 120px;
     resize: vertical;
-    min-height: 100px;
 }
 
 .create-training-module button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #27ae60;
-    color: #ffffff;
+    background: #f4c430; /* Yellow */
+    color: #1a3c34; /* Dark green text */
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.create-training-module button:hover {
-    background-color: #219653;
 }

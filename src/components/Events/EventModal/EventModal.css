@@ -1,47 +1,67 @@
-
-.event-modal.open {
-    opacity: 1;
-    visibility: visible;
+.event-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .event-modal .modal-content {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass */
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    padding: 20px;
-    width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: white;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+.event-modal .modal-content h2 {
+    color: #f4c430; /* Yellow */
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
 }
 
 .event-modal .modal-content input,
 .event-modal .modal-content textarea {
     width: 100%;
+    padding: 12px;
     margin: 10px 0;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    border: 2px solid #f4c430; /* Yellow */
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 1rem;
 }
 
-.event-modal .modal-button-update, .event-modal .modal-button-cancel, .event-modal .modal-button-close {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 8px 16px;
+.event-modal .modal-content textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.event-modal .modal-content p {
+    margin: 0.5rem 0;
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.event-modal .modal-button-update,
+.event-modal .modal-button-cancel,
+.event-modal .modal-button-close {
+    background: #f4c430; /* Yellow */
+    color: #1a3c34; /* Dark green text */
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 10px;
-    margin-right: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.event-modal .modal-button-update:hover, .event-modal .modal-button-cancel:hover, .event-modal .modal-button-close:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-.event-modal .modal-content h2 {
-    margin-bottom: 20px;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    font-size: 1rem;
 }

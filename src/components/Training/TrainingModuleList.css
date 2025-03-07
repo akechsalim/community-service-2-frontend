@@ -1,54 +1,60 @@
 .training-module-list {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    background: linear-gradient(135deg, #1a3c34 0%, #2e8b57 100%);
+    min-height: 100vh;
+    padding: 80px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .training-module-list h1 {
-    font-size: 2.5rem;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 3rem;
+    color: #f4c430; /* Yellow */
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .module-card {
-    background: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.module-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass */
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px;
 }
 
 .module-card h2 {
-    font-size: 1.5rem;
-    color: #34495e;
-    margin-bottom: 10px;
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.module-card h2 a {
+    color: #f4c430; /* Yellow link */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.module-card h2 a:hover {
+    color: #ffda79; /* Lighter yellow */
 }
 
 .module-card p {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
 }
 
 .module-card button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: #ffffff;
+    background: #f4c430; /* Yellow */
+    color: #1a3c34; /* Dark green text */
     border: none;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.module-card button:hover {
-    background-color: #2980b9;
 }

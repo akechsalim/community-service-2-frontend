@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import AuthService from "../Auth/Services/authService";
+import { motion } from 'framer-motion';
+import AuthService from '../Auth/Services/authService';
 import './TrainingModuleList.css';
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const TrainingModuleList = () => {
     const [modules, setModules] = useState([]);
@@ -14,16 +15,15 @@ const TrainingModuleList = () => {
                 const authHeaders = AuthService.getAuthHeaders();
                 const volunteerId = AuthService.getUserId();
 
-                // Fetch modules
                 const modulesResponse = await axios.get('http://localhost:8080/api/training-modules', {
-                    headers: authHeaders
+                    headers: authHeaders,
                 });
                 setModules(modulesResponse.data);
 
-                // Fetch progress for the logged-in volunteer
-                const progressResponse = await axios.get(`http://localhost:8080/api/training-progress/volunteer/${volunteerId}`, {
-                    headers: authHeaders
-                });
+                const progressResponse = await axios.get(
+                    `http://localhost:8080/api/training-progress/volunteer/${volunteerId}`,
+                    { headers: authHeaders }
+                );
                 setProgress(progressResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -32,18 +32,18 @@ const TrainingModuleList = () => {
         fetchData();
     }, []);
 
-    const isModuleCompleted = (moduleId) => {
-        return progress.some(p => p.module.id === moduleId && p.completed);
-    };
+    const isModuleCompleted = (moduleId) =>
+        progress.some((p) => p.module.id === moduleId && p.completed);
 
     const downloadCertificate = async (moduleId) => {
         try {
             const authHeaders = AuthService.getAuthHeaders();
             const volunteerId = AuthService.getUserId();
-            const progressResponse = await axios.get(`http://localhost:8080/api/training-progress/volunteer/${volunteerId}`, {
-                headers: authHeaders
-            });
-            const progress = progressResponse.data.find(p => p.module.id === parseInt(moduleId));
+            const progressResponse = await axios.get(
+                `http://localhost:8080/api/training-progress/volunteer/${volunteerId}`,
+                { headers: authHeaders }
+            );
+            const progress = progressResponse.data.find((p) => p.module.id === parseInt(moduleId));
             if (!progress || !progress.certificateApproved) {
                 alert('Certificate download not approved yet.');
                 return;
@@ -52,7 +52,7 @@ const TrainingModuleList = () => {
             const response = await axios.get('http://localhost:8080/api/certificates/generate', {
                 headers: authHeaders,
                 params: { volunteerId, moduleId },
-                responseType: 'blob'
+                responseType: 'blob',
             });
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
@@ -65,27 +65,65 @@ const TrainingModuleList = () => {
         }
     };
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { duration: 0.8, ease: 'easeOut', staggerChildren: 0.3 },
+        },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: (i) => ({
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: 'easeOut', type: 'spring', bounce: 0.4, delay: i * 0.2 },
+        }),
+    };
+
     return (
-        <div className="training-module-list">
-            <h1>Training Modules</h1>
+        <motion.div
+            className="training-module-list"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+        >
+            <motion.h1 variants={itemVariants} custom={0}>
+                Training Modules
+            </motion.h1>
             {modules.length > 0 ? (
-                modules.map(module => (
-                    <div key={module.id} className="module-card">
+                modules.map((module, index) => (
+                    <motion.div
+                        key={module.id}
+                        className="module-card"
+                        variants={itemVariants}
+                        custom={index + 1}
+                        whileHover={{ scale: 1.05 }}
+                    >
                         <h2>
                             <Link to={`/training-modules/${module.id}`}>{module.title}</Link>
                         </h2>
                         <p>{module.description}</p>
                         {isModuleCompleted(module.id) ? (
-                            <button onClick={() => downloadCertificate(module.id)}>Download Certificate</button>
+                            <motion.button
+                                onClick={() => downloadCertificate(module.id)}
+                                whileHover={{ scale: 1.1, backgroundColor: '#ffda79' }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                Download Certificate
+                            </motion.button>
                         ) : (
                             <p>Complete the module to download the certificate.</p>
                         )}
-                    </div>
+                    </motion.div>
                 ))
             ) : (
-                <p>No training modules available.</p>
+                <motion.p variants={itemVariants} custom={1}>
+                    No training modules available.
+                </motion.p>
             )}
-        </div>
+        </motion.div>
     );
 };
 
