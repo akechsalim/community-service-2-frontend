@@ -1,10 +1,9 @@
 .homepage {
     padding: 0;
     text-align: center;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: url('E:/Javascript/local projects/community-service-2-frontend/community-service-management-2/public/images/community-service-1.jpg') no-repeat center center/cover;
     color: white;
 }
 
@@ -17,47 +16,62 @@
     padding: 20px;
 }
 
+.hero-content {
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass effect */
+    /*backdrop-filter: blur(10px);*/
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
 .hero-headline {
     font-size: 3rem;
     margin-bottom: 20px;
+    color: #f4c430; /* Yellow accent */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subheadline {
     font-size: 1.5rem;
     margin-bottom: 30px;
+    color: #ffffff;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .cta-button {
-    background-color: #007bff;
-    color: white;
+    background-color: #f4c430; /* Yellow */
+    color: #1a3c34; /* Dark green text */
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1.2rem;
     cursor: pointer;
-    text-decoration: none;
     transition: background-color 0.3s ease;
 }
 
 .cta-button:hover {
-    background-color: #0056b3;
+    background-color: #ffda79; /* Lighter yellow */
 }
 
 .events-section {
     margin: 40px 0;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: #333333;
-}
-.events-section h2{
-    color: white;
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass */
+    /*backdrop-filter: blur(10px);*/
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
 }
 
-.event-cards-2{
+.events-section h2 {
+    color: #f4c430; /* Yellow */
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.event-cards-2 {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -66,16 +80,16 @@
 
 .more-button {
     margin-top: 20px;
-    background-color: #28a745;
-    color: white;
+    background-color: #f4c430; /* Yellow */
+    color: #1a3c34; /* Dark green text */
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .more-button:hover {
-    background-color: #218838;
+    background-color: #ffda79; /* Lighter yellow */
 }

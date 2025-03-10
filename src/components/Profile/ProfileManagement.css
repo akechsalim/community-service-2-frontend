@@ -1,0 +1,108 @@
+.profile-management {
+    background: linear-gradient(135deg, #1a3c34 0%, #2e8b57 100%);
+    min-height: 100vh;
+    padding: 80px 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-management h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 3rem;
+    color: #f4c430; /* Yellow */
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Profile Icon Styling */
+.profile-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.profile-icon svg {
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass */
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.profile-view,
+.profile-edit,
+.password-edit {
+    background: rgba(255, 255, 255, 0.15); /* Frosted glass */
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+.profile-view h2,
+.profile-edit h2,
+.password-edit h2 {
+    color: #f4c430; /* Yellow */
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-view p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    color: #ffffff;
+}
+
+.profile-edit input,
+.password-edit input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #f4c430; /* Yellow */
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-edit input:focus,
+.password-edit input:focus {
+    border-color: #ffda79; /* Lighter yellow */
+    box-shadow: 0 0 8px rgba(244, 196, 48, 0.5);
+    outline: none;
+}
+
+.profile-view button,
+.profile-edit button,
+.password-edit button {
+    background: #f4c430; /* Yellow */
+    color: #1a3c34; /* Dark green text */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.message {
+    color: #ffffff;
+    background: rgba(244, 196, 48, 0.3); /* Yellow tint */
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+}

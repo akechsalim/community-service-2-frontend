@@ -5,13 +5,13 @@ import './Navbar.css';
 
 const Navbar = ({ isAuthenticated, userRole, onLogout }) => {
     const navigate = useNavigate();
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // Toggle menu visibility
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleLogoutClick = (e) => {
         e.preventDefault();
         onLogout();
         navigate('/login');
-        setIsMenuOpen(false); // Close menu on logout
+        setIsMenuOpen(false);
     };
 
     const scrollToSection = (id) => {
@@ -22,21 +22,19 @@ const Navbar = ({ isAuthenticated, userRole, onLogout }) => {
                 element.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }, 100);
-        setIsMenuOpen(false); // Close menu after navigation
+        setIsMenuOpen(false);
     };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    // Animation variants for the menu container
     const menuVariants = {
         hidden: { opacity: 0, x: '-100%' },
         visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: 'easeOut' } },
         exit: { opacity: 0, x: '-100%', transition: { duration: 0.5, ease: 'easeOut' } },
     };
 
-    // Animation variants for list items
     const itemVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: (i) => ({
@@ -46,7 +44,6 @@ const Navbar = ({ isAuthenticated, userRole, onLogout }) => {
         }),
     };
 
-    // Animation variants for dropdown items
     const dropdownItemVariants = {
         hidden: { opacity: 0, y: 10 },
         visible: (i) => ({
@@ -58,12 +55,10 @@ const Navbar = ({ isAuthenticated, userRole, onLogout }) => {
 
     return (
         <nav className="navbar">
-            {/* Hamburger Icon */}
             <button className="hamburger" onClick={toggleMenu}>
-                {isMenuOpen ? '✖' : '☰'} {/* Toggle between hamburger and close icon */}
+                {isMenuOpen ? '✖' : '☰'}
             </button>
 
-            {/* Animated Menu */}
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div
@@ -81,9 +76,8 @@ const Navbar = ({ isAuthenticated, userRole, onLogout }) => {
                                 <Link to="/events" onClick={() => setIsMenuOpen(false)}>events</Link>
                             </motion.li>
 
-                            {/* Admin Dashboard Dropdown */}
                             {isAuthenticated && userRole === 'ADMIN' && (
-                                <motion.li custom={3} variants={itemVariants} initial="hidden" animate="visible"
+                                <motion.li custom={2} variants={itemVariants} initial="hidden" animate="visible"
                                            className="dropdown">
                                     <button className="dropbtn" onClick={() => toggleMenu('admin')}>
                                         admin dashboard
@@ -113,9 +107,8 @@ const Navbar = ({ isAuthenticated, userRole, onLogout }) => {
                                 </motion.li>
                             )}
 
-                            {/* Training Module Dropdown */}
                             {isAuthenticated && userRole === 'ADMIN' && (
-                                <motion.li custom={4} variants={itemVariants} initial="hidden" animate="visible"
+                                <motion.li custom={3} variants={itemVariants} initial="hidden" animate="visible"
                                            className="dropdown">
                                     <button className="dropbtn" onClick={() => toggleMenu('training')}>
                                         Training Module
@@ -155,25 +148,28 @@ const Navbar = ({ isAuthenticated, userRole, onLogout }) => {
                                 </motion.li>
                             )}
 
-                            {/* Volunteer Links */}
+                            {isAuthenticated && userRole === 'VOLUNTEER' && (
+                                <motion.li custom={2} variants={itemVariants} initial="hidden" animate="visible">
+                                    <Link to="/volunteer" onClick={() => setIsMenuOpen(false)}>volunteer dashboard</Link>
+                                </motion.li>
+                            )}
                             {isAuthenticated && userRole === 'VOLUNTEER' && (
                                 <motion.li custom={3} variants={itemVariants} initial="hidden" animate="visible">
-                                    <Link to="/volunteer" onClick={() => setIsMenuOpen(false)}>volunteer
-                                        dashboard</Link>
+                                    <Link to="/training-modules" onClick={() => setIsMenuOpen(false)}>Training Modules</Link>
                                 </motion.li>
                             )}
-                            {isAuthenticated && userRole === 'VOLUNTEER' && (
-                                <motion.li custom={4} variants={itemVariants} initial="hidden" animate="visible">
-                                    <Link to="/training-modules" onClick={() => setIsMenuOpen(false)}>Training
-                                        Modules</Link>
-                                </motion.li>
-                            )}
-                            <motion.li custom={2} variants={itemVariants} initial="hidden" animate="visible">
+                            <motion.li custom={4} variants={itemVariants} initial="hidden" animate="visible">
                                 <Link to="/contact" onClick={() => setIsMenuOpen(false)}>contact page</Link>
                             </motion.li>
 
-                            {/* Login/Logout */}
-                            <motion.li custom={5} variants={itemVariants} initial="hidden" animate="visible">
+                            {/* Profile Link for all authenticated users */}
+                            {isAuthenticated && (
+                                <motion.li custom={5} variants={itemVariants} initial="hidden" animate="visible">
+                                    <Link to="/profile" onClick={() => setIsMenuOpen(false)}>profile</Link>
+                                </motion.li>
+                            )}
+
+                            <motion.li custom={6} variants={itemVariants} initial="hidden" animate="visible">
                                 {isAuthenticated ? (
                                     <Link to="/login" onClick={handleLogoutClick}>logout</Link>
                                 ) : (

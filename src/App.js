@@ -16,6 +16,7 @@ import TrainingModuleList from './components/Training/TrainingModuleList';
 import CreateTrainingModule from './components/Training/CreateTrainingModule';
 import VolunteerProgress from './components/Dashboard/Admin/VolunteerProgress';
 import TrainingModuleDetails from './components/Training/TrainingModuleDetails';
+import ProfileManagement from "./components/Profile/ProfileManagement";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -261,6 +262,22 @@ function App() {
                                     transition={{ duration: 0.5, ease: 'easeInOut' }}
                                 >
                                     <EventForm />
+                                </motion.div>
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <PrivateRoute allowedRoles={['VOLUNTEER', 'ADMIN', 'SPONSOR']}>
+                                <motion.div
+                                    variants={pageVariants}
+                                    initial="initial"
+                                    animate="animate"
+                                    exit="exit"
+                                    transition={{ duration: 0.5, ease: 'easeInOut' }}
+                                >
+                                    <ProfileManagement />
                                 </motion.div>
                             </PrivateRoute>
                         }
